@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		065BD139246069737B34C66D /* libPods-ItemManagement-ItemManagementUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99817B04EC82EFDA2AE558D6 /* libPods-ItemManagement-ItemManagementUITests.a */; };
+		12561B0D245FD16F003BA3F4 /* VCWeeklyList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12561B0C245FD16F003BA3F4 /* VCWeeklyList.swift */; };
+		12561B0F245FD1BA003BA3F4 /* VCCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12561B0E245FD1BA003BA3F4 /* VCCalendar.swift */; };
+		12561B11245FE76B003BA3F4 /* VCHomeTabBar + UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12561B10245FE76B003BA3F4 /* VCHomeTabBar + UI.swift */; };
+		12561B16245FFAD1003BA3F4 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12561B15245FFAD1003BA3F4 /* UIView.swift */; };
+		126F732624600E3500AC08CC /* Home.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 126F732524600E3500AC08CC /* Home.xcassets */; };
 		12A5BDA0245E65BC001C2431 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A5BD9F245E65BC001C2431 /* AppDelegate.swift */; };
 		12A5BDA2245E65BC001C2431 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A5BDA1245E65BC001C2431 /* SceneDelegate.swift */; };
 		12A5BDA4245E65BC001C2431 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A5BDA3245E65BC001C2431 /* ContentView.swift */; };
@@ -41,6 +46,11 @@
 /* Begin PBXFileReference section */
 		0260DD302C3C28F3A054231E /* Pods-ItemManagement.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItemManagement.release.xcconfig"; path = "Target Support Files/Pods-ItemManagement/Pods-ItemManagement.release.xcconfig"; sourceTree = "<group>"; };
 		037494DEA7A64E541984B067 /* libPods-ItemManagementTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ItemManagementTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		12561B0C245FD16F003BA3F4 /* VCWeeklyList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCWeeklyList.swift; sourceTree = "<group>"; };
+		12561B0E245FD1BA003BA3F4 /* VCCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCCalendar.swift; sourceTree = "<group>"; };
+		12561B10245FE76B003BA3F4 /* VCHomeTabBar + UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VCHomeTabBar + UI.swift"; sourceTree = "<group>"; };
+		12561B15245FFAD1003BA3F4 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
+		126F732524600E3500AC08CC /* Home.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Home.xcassets; sourceTree = "<group>"; };
 		12A5BD9C245E65BC001C2431 /* ItemManagement.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ItemManagement.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		12A5BD9F245E65BC001C2431 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		12A5BDA1245E65BC001C2431 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -93,16 +103,58 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		12561B0A245FD091003BA3F4 /*  WeeklyList */ = {
+			isa = PBXGroup;
+			children = (
+				12561B0C245FD16F003BA3F4 /* VCWeeklyList.swift */,
+			);
+			path = " WeeklyList";
+			sourceTree = "<group>";
+		};
+		12561B0B245FD0EE003BA3F4 /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				12561B0E245FD1BA003BA3F4 /* VCCalendar.swift */,
+			);
+			path = Calendar;
+			sourceTree = "<group>";
+		};
+		12561B13245FFAAF003BA3F4 /* Code */ = {
+			isa = PBXGroup;
+			children = (
+				12561B14245FFAC1003BA3F4 /* Extension */,
+				12A5BDD0245E6606001C2431 /* Home */,
+			);
+			path = Code;
+			sourceTree = "<group>";
+		};
+		12561B14245FFAC1003BA3F4 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				12561B15245FFAD1003BA3F4 /* UIView.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		1258B3D324600601006D2E35 /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				12A5BDD1245E673D001C2431 /* VCHomeTabBar.swift */,
+				12561B10245FE76B003BA3F4 /* VCHomeTabBar + UI.swift */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
 		12A5BD93245E65BC001C2431 = {
 			isa = PBXGroup;
 			children = (
-				12A5BD9E245E65BC001C2431 /* ItemManagement */,
-				12A5BDD0245E6606001C2431 /* Home */,
 				12A5BDB5245E65BE001C2431 /* ItemManagementTests */,
 				12A5BDC0245E65BE001C2431 /* ItemManagementUITests */,
 				12A5BD9D245E65BC001C2431 /* Products */,
 				44C663C52834B45AE2F765E1 /* Pods */,
 				4DBA328A3E2733CCAD9616E7 /* Frameworks */,
+				12A5BD9E245E65BC001C2431 /* ItemManagement */,
+				12561B13245FFAAF003BA3F4 /* Code */,
 			);
 			sourceTree = "<group>";
 		};
@@ -167,7 +219,10 @@
 		12A5BDD0245E6606001C2431 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				12A5BDD1245E673D001C2431 /* VCHomeTabBar.swift */,
+				1258B3D324600601006D2E35 /* TabBar */,
+				12561B0B245FD0EE003BA3F4 /* Calendar */,
+				12561B0A245FD091003BA3F4 /*  WeeklyList */,
+				126F732524600E3500AC08CC /* Home.xcassets */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -182,7 +237,6 @@
 				4FD0CF984F8EECEEE491B1EB /* Pods-ItemManagementTests.debug.xcconfig */,
 				880FBA71F62062093B6ECC05 /* Pods-ItemManagementTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -305,6 +359,7 @@
 			files = (
 				12A5BDAC245E65BE001C2431 /* LaunchScreen.storyboard in Resources */,
 				12A5BDA9245E65BE001C2431 /* Preview Assets.xcassets in Resources */,
+				126F732624600E3500AC08CC /* Home.xcassets in Resources */,
 				12A5BDA6245E65BE001C2431 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -399,9 +454,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				12561B16245FFAD1003BA3F4 /* UIView.swift in Sources */,
 				12A5BDA0245E65BC001C2431 /* AppDelegate.swift in Sources */,
+				12561B0D245FD16F003BA3F4 /* VCWeeklyList.swift in Sources */,
+				12561B0F245FD1BA003BA3F4 /* VCCalendar.swift in Sources */,
 				12A5BDA2245E65BC001C2431 /* SceneDelegate.swift in Sources */,
 				12A5BDA4245E65BC001C2431 /* ContentView.swift in Sources */,
+				12561B11245FE76B003BA3F4 /* VCHomeTabBar + UI.swift in Sources */,
 				12A5BDD2245E673D001C2431 /* VCHomeTabBar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
