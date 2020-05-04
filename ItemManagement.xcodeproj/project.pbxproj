@@ -12,6 +12,7 @@
 		12561B0F245FD1BA003BA3F4 /* VCCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12561B0E245FD1BA003BA3F4 /* VCCalendar.swift */; };
 		12561B11245FE76B003BA3F4 /* VCHomeTabBar + UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12561B10245FE76B003BA3F4 /* VCHomeTabBar + UI.swift */; };
 		12571639246085CD000998A1 /* KeyString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12571638246085CD000998A1 /* KeyString.swift */; };
+		1257163D24609C9D000998A1 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1257163C24609C9D000998A1 /* UIViewController.swift */; };
 		1262D81724604F050068F801 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1262D81624604F050068F801 /* UIColor.swift */; };
 		1262D81A246056540068F801 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1262D819246056540068F801 /* Theme.swift */; };
 		126F732624600E3500AC08CC /* Home.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 126F732524600E3500AC08CC /* Home.xcassets */; };
@@ -52,6 +53,7 @@
 		12561B0E245FD1BA003BA3F4 /* VCCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCCalendar.swift; sourceTree = "<group>"; };
 		12561B10245FE76B003BA3F4 /* VCHomeTabBar + UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VCHomeTabBar + UI.swift"; sourceTree = "<group>"; };
 		12571638246085CD000998A1 /* KeyString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyString.swift; sourceTree = "<group>"; };
+		1257163C24609C9D000998A1 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		1262D81624604F050068F801 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		1262D819246056540068F801 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		126F732524600E3500AC08CC /* Home.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Home.xcassets; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 			isa = PBXGroup;
 			children = (
 				1262D81624604F050068F801 /* UIColor.swift */,
+				1257163C24609C9D000998A1 /* UIViewController.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -478,6 +481,7 @@
 			files = (
 				12A5BDA0245E65BC001C2431 /* AppDelegate.swift in Sources */,
 				12561B0D245FD16F003BA3F4 /* VCWeeklyList.swift in Sources */,
+				1257163D24609C9D000998A1 /* UIViewController.swift in Sources */,
 				12561B0F245FD1BA003BA3F4 /* VCCalendar.swift in Sources */,
 				1262D81724604F050068F801 /* UIColor.swift in Sources */,
 				12A5BDA2245E65BC001C2431 /* SceneDelegate.swift in Sources */,

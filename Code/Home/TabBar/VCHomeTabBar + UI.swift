@@ -67,12 +67,12 @@ extension VCHomeTabBar {
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: safe.bottomAnchor, constant: -height),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: safe.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: safe.trailingAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             
             separator.topAnchor.constraint(equalTo: collectionView.topAnchor),
-            separator.leadingAnchor.constraint(equalTo: safe.leadingAnchor),
-            separator.trailingAnchor.constraint(equalTo: safe.trailingAnchor),
+            separator.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            separator.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             separator.heightAnchor.constraint(equalToConstant: separatorHeight),
         ])
     }

@@ -33,11 +33,7 @@ class VCHomeTabBar: UIViewController {
         displayUI()
         
         view.backgroundColor = Theme.background
-        navigationController?.navigationBar.barStyle = .default
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        print("viewWillAppear")
+        setTopBarColor()
     }
 }
+

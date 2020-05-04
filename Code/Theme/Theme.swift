@@ -19,7 +19,7 @@ class Theme {
     }()
     
     static var bar: UIColor = {
-        return isDarkMode ? UIColor(hexString: "#202020") : .white
+        return isDarkMode ? UIColor(hexString: "#1C1C1C") : .white
     }()
     
     static var font: UIColor = {
@@ -27,7 +27,7 @@ class Theme {
     }()
     
     static var background: UIColor = {
-       return isDarkMode ? UIColor(hexString: "#181818") : UIColor(hexString: "#FAFAFA")
+       return isDarkMode ? UIColor(hexString: "#151515") : UIColor(hexString: "#FAFAFA")
     }()
     
     static var accent: UIColor = {
