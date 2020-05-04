@@ -11,7 +11,9 @@
 		12561B0D245FD16F003BA3F4 /* VCWeeklyList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12561B0C245FD16F003BA3F4 /* VCWeeklyList.swift */; };
 		12561B0F245FD1BA003BA3F4 /* VCCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12561B0E245FD1BA003BA3F4 /* VCCalendar.swift */; };
 		12561B11245FE76B003BA3F4 /* VCHomeTabBar + UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12561B10245FE76B003BA3F4 /* VCHomeTabBar + UI.swift */; };
-		12561B16245FFAD1003BA3F4 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12561B15245FFAD1003BA3F4 /* UIView.swift */; };
+		12571639246085CD000998A1 /* KeyString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12571638246085CD000998A1 /* KeyString.swift */; };
+		1262D81724604F050068F801 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1262D81624604F050068F801 /* UIColor.swift */; };
+		1262D81A246056540068F801 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1262D819246056540068F801 /* Theme.swift */; };
 		126F732624600E3500AC08CC /* Home.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 126F732524600E3500AC08CC /* Home.xcassets */; };
 		12A5BDA0245E65BC001C2431 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A5BD9F245E65BC001C2431 /* AppDelegate.swift */; };
 		12A5BDA2245E65BC001C2431 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A5BDA1245E65BC001C2431 /* SceneDelegate.swift */; };
@@ -49,7 +51,9 @@
 		12561B0C245FD16F003BA3F4 /* VCWeeklyList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCWeeklyList.swift; sourceTree = "<group>"; };
 		12561B0E245FD1BA003BA3F4 /* VCCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCCalendar.swift; sourceTree = "<group>"; };
 		12561B10245FE76B003BA3F4 /* VCHomeTabBar + UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VCHomeTabBar + UI.swift"; sourceTree = "<group>"; };
-		12561B15245FFAD1003BA3F4 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
+		12571638246085CD000998A1 /* KeyString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyString.swift; sourceTree = "<group>"; };
+		1262D81624604F050068F801 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		1262D819246056540068F801 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		126F732524600E3500AC08CC /* Home.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Home.xcassets; sourceTree = "<group>"; };
 		12A5BD9C245E65BC001C2431 /* ItemManagement.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ItemManagement.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		12A5BD9F245E65BC001C2431 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -122,6 +126,10 @@
 		12561B13245FFAAF003BA3F4 /* Code */ = {
 			isa = PBXGroup;
 			children = (
+				12A5BD9F245E65BC001C2431 /* AppDelegate.swift */,
+				12A5BDA1245E65BC001C2431 /* SceneDelegate.swift */,
+				12571637246085AD000998A1 /* KeyString */,
+				1262D818246056490068F801 /* Theme */,
 				12561B14245FFAC1003BA3F4 /* Extension */,
 				12A5BDD0245E6606001C2431 /* Home */,
 			);
@@ -131,9 +139,17 @@
 		12561B14245FFAC1003BA3F4 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
-				12561B15245FFAD1003BA3F4 /* UIView.swift */,
+				1262D81624604F050068F801 /* UIColor.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		12571637246085AD000998A1 /* KeyString */ = {
+			isa = PBXGroup;
+			children = (
+				12571638246085CD000998A1 /* KeyString.swift */,
+			);
+			path = KeyString;
 			sourceTree = "<group>";
 		};
 		1258B3D324600601006D2E35 /* TabBar */ = {
@@ -143,6 +159,14 @@
 				12561B10245FE76B003BA3F4 /* VCHomeTabBar + UI.swift */,
 			);
 			path = TabBar;
+			sourceTree = "<group>";
+		};
+		1262D818246056490068F801 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				1262D819246056540068F801 /* Theme.swift */,
+			);
+			path = Theme;
 			sourceTree = "<group>";
 		};
 		12A5BD93245E65BC001C2431 = {
@@ -208,8 +232,6 @@
 		12A5BDCF245E65DC001C2431 /* Default */ = {
 			isa = PBXGroup;
 			children = (
-				12A5BD9F245E65BC001C2431 /* AppDelegate.swift */,
-				12A5BDA1245E65BC001C2431 /* SceneDelegate.swift */,
 				12A5BDA3245E65BC001C2431 /* ContentView.swift */,
 				12A5BDAA245E65BE001C2431 /* LaunchScreen.storyboard */,
 			);
@@ -454,12 +476,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				12561B16245FFAD1003BA3F4 /* UIView.swift in Sources */,
 				12A5BDA0245E65BC001C2431 /* AppDelegate.swift in Sources */,
 				12561B0D245FD16F003BA3F4 /* VCWeeklyList.swift in Sources */,
 				12561B0F245FD1BA003BA3F4 /* VCCalendar.swift in Sources */,
+				1262D81724604F050068F801 /* UIColor.swift in Sources */,
 				12A5BDA2245E65BC001C2431 /* SceneDelegate.swift in Sources */,
 				12A5BDA4245E65BC001C2431 /* ContentView.swift in Sources */,
+				12571639246085CD000998A1 /* KeyString.swift in Sources */,
+				1262D81A246056540068F801 /* Theme.swift in Sources */,
 				12561B11245FE76B003BA3F4 /* VCHomeTabBar + UI.swift in Sources */,
 				12A5BDD2245E673D001C2431 /* VCHomeTabBar.swift in Sources */,
 			);

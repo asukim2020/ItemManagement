@@ -10,6 +10,7 @@ import UIKit
 
 class VCHomeTabBar: UIViewController {
     
+    let separator = UIView()
     let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 0
@@ -30,5 +31,13 @@ class VCHomeTabBar: UIViewController {
         
         setUpUI()
         displayUI()
+        
+        view.backgroundColor = Theme.background
+        navigationController?.navigationBar.barStyle = .default
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print("viewWillAppear")
     }
 }

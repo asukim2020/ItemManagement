@@ -8,7 +8,7 @@
 
 import UIKit
 
-// TODO: - 이미지 등록
+// MARK: - tabbar type
 enum HomeTabBar: CaseIterable {
     case weeklyList
     case calender
@@ -42,27 +42,38 @@ enum HomeTabBar: CaseIterable {
     }
 }
 
+// MARK: - extension VCHomeTabBar
 extension VCHomeTabBar {
     
-    var height: CGFloat { return 50 }
+    var separatorHeight: CGFloat { return 0.7 }
+    var height: CGFloat { return 48 }
     var count: Int { return HomeTabBar.allCases.count }
     
     func setUpUI() {
+        collectionView.backgroundColor = Theme.bar
         collectionView.delegate = self
         collectionView.dataSource = self
-        
         collectionView.register(Cell.self, forCellWithReuseIdentifier: Cell.identifier)
+        
+        separator.backgroundColor = Theme.separator
+        separator.translatesAutoresizingMaskIntoConstraints = false
     }
     
     func displayUI() {
         view.addSubview(collectionView)
+        view.addSubview(separator)
         
         let safe = view.safeAreaLayoutGuide
         NSLayoutConstraint.activate([
-            collectionView.bottomAnchor.constraint(equalTo: safe.bottomAnchor),
+            collectionView.topAnchor.constraint(equalTo: safe.bottomAnchor, constant: -height),
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             collectionView.leadingAnchor.constraint(equalTo: safe.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: safe.trailingAnchor),
-            collectionView.heightAnchor.constraint(equalToConstant: height)
+            
+            separator.topAnchor.constraint(equalTo: collectionView.topAnchor),
+            separator.leadingAnchor.constraint(equalTo: safe.leadingAnchor),
+            separator.trailingAnchor.constraint(equalTo: safe.trailingAnchor),
+            separator.heightAnchor.constraint(equalToConstant: separatorHeight),
         ])
     }
 }
@@ -74,7 +85,6 @@ extension VCHomeTabBar: UICollectionViewDelegate, UICollectionViewDataSource, UI
         return count
     }
     
-    // TODO: - 이미지 등록
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Cell.identifier, for: indexPath) as! Cell
         let edgeImg = HomeTabBar.allCases[indexPath.row].getEdgeImage()
@@ -86,8 +96,14 @@ extension VCHomeTabBar: UICollectionViewDelegate, UICollectionViewDataSource, UI
     // TODO: - 클릭 이벤트 등록
     // TODO: - 클릭 애니매이션 등록
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        for (idx, _) in HomeTabBar.allCases.enumerated() {
+            let cell = collectionView.cellForItem(at: IndexPath(row: idx, section: 0)) as! Cell
+            cell.deavtiveImage()
+        }
+        
         let cell = collectionView.cellForItem(at: indexPath) as! Cell
-        cell.toggleImage()
+        cell.activeImage()
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -101,7 +117,7 @@ extension VCHomeTabBar: UICollectionViewDelegate, UICollectionViewDataSource, UI
 // MARK: - Cell
 fileprivate class Cell: UICollectionViewCell {
     static let identifier: String = "cell"
-    let size: CGFloat = 30
+    let size: CGFloat = 25
     
     let defaultIv = UIImageView()
     let selectedIv = UIImageView()
@@ -117,19 +133,14 @@ fileprivate class Cell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func toggleImage() {
-        if !defaultIv.isHidden
-            && selectedIv.isHidden {
-            defaultIv.isHidden = true
-            selectedIv.isHidden = false
-        } else if defaultIv.isHidden
-            && !selectedIv.isHidden {
-            defaultIv.isHidden = false
-            selectedIv.isHidden = true
-        } else {
-            defaultIv.isHidden = false
-            selectedIv.isHidden = true
-        }
+    func activeImage() {
+        defaultIv.isHidden = true
+        selectedIv.isHidden = false
+    }
+    
+    func deavtiveImage() {
+        defaultIv.isHidden = false
+        selectedIv.isHidden = true
     }
     
     func setImage(defaultIv: UIImage?, selectedIv: UIImage?) {
@@ -140,14 +151,16 @@ fileprivate class Cell: UICollectionViewCell {
             else { return }
         
         self.defaultIv.image = defaultIv?.withRenderingMode(.alwaysTemplate)
-        self.defaultIv.tintColor = UIColor(displayP3Red: 0, green: 0.48, blue: 1, alpha: 1)
+        self.defaultIv.tintColor = Theme.accent
         
         self.selectedIv.image = selectedIv?.withRenderingMode(.alwaysTemplate)
-        self.selectedIv.tintColor = UIColor(displayP3Red: 0, green: 0.48, blue: 1, alpha: 1)
+        self.selectedIv.tintColor = Theme.accent
     }
     
     // TODO: 추후 color 지정
     private func setUpUI() {
+        contentView.backgroundColor = .clear
+        
         defaultIv.image = nil
         defaultIv.translatesAutoresizingMaskIntoConstraints = false
         defaultIv.isHidden = false
