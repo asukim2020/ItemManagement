@@ -22,6 +22,9 @@ class VCHomeTabBar: UIViewController {
         return cv
     }()
     
+    weak var oldVC: UIViewController? = nil
+    var index: Int = UserDefaults.standard.integer(forKey: KeyString.lastSelectedTabBarItem)
+    
     convenience init() {
         self.init(nibName:nil, bundle:nil)
     }
@@ -31,6 +34,7 @@ class VCHomeTabBar: UIViewController {
         
         setUpUI()
         displayUI()
+        registerCell()
         
         view.backgroundColor = Theme.background
         setTopBarColor()

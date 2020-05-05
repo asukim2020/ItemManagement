@@ -13,13 +13,12 @@ import UIKit
 
 class Theme {
     
-    // TODO: - == 으로 변경할 것
     static var isDarkMode: Bool = {
         return UITraitCollection.current.userInterfaceStyle == .dark
     }()
     
     static var bar: UIColor = {
-        return isDarkMode ? UIColor(hexString: "#1C1C1C") : .white
+        return isDarkMode ? UIColor.gray.withAlphaComponent(0.15) : .white
     }()
     
     static var font: UIColor = {
@@ -27,11 +26,12 @@ class Theme {
     }()
     
     static var background: UIColor = {
-       return isDarkMode ? UIColor(hexString: "#151515") : UIColor(hexString: "#FAFAFA")
+        return isDarkMode ? UIColor(hexString: "#202020") : UIColor(hexString: "#FAFAFA")
     }()
     
     static var accent: UIColor = {
-        return UIColor(red: 0, green: 0.48, blue: 1, alpha: 1)
+//        return UIColor(red: 0, green: 0.48, blue: 1, alpha: 1)
+        return isDarkMode ? UIColor(hexString: "#FAFAFA") : .darkGray
     }()
     
     static var separator: UIColor = {

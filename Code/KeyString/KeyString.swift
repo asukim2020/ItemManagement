@@ -11,7 +11,7 @@ import UIKit
 class KeyString {
     
     // MARK: - UserDefaults
-//    static let isDarkMode: String = "isDarkMode"
+    static let lastSelectedTabBarItem: String = "lastSelectedTabBarItem"
     
     
     // MARK: - NotificationCenter
