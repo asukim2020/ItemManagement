@@ -9,6 +9,8 @@
 import UIKit
 
 extension UIViewController {
+    static var separatorSize: CGFloat = 0.7
+    
     func setTopBarColor() {
         clearStatusBarColor()
         clearNavigationBarColor()
@@ -17,12 +19,22 @@ extension UIViewController {
         v.translatesAutoresizingMaskIntoConstraints = false
         v.backgroundColor = Theme.bar
         
+        let separator = UIView()
+        separator.translatesAutoresizingMaskIntoConstraints = false
+        separator.backgroundColor = Theme.separator
+        
         view.addSubview(v)
+        view.addSubview(separator)
         NSLayoutConstraint.activate([
             v.topAnchor.constraint(equalTo: view.topAnchor),
             v.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             v.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             v.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            
+            separator.bottomAnchor.constraint(equalTo: v.bottomAnchor),
+            separator.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            separator.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            separator.heightAnchor.constraint(equalToConstant: UIViewController.separatorSize)
         ])
     }
     
@@ -49,6 +61,7 @@ extension UIViewController {
     func clearNavigationBarColor() {
         self.navigationController?.navigationBar.backgroundColor = .clear
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
     }
 }
 

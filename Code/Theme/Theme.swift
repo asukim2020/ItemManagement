@@ -18,11 +18,15 @@ class Theme {
     }()
     
     static var bar: UIColor = {
-        return isDarkMode ? UIColor.gray.withAlphaComponent(0.15) : .white
+        return isDarkMode ? UIColor(red: 0.15, green: 0.15, blue: 0.15, alpha: 1) : .white
     }()
     
     static var font: UIColor = {
-        return isDarkMode ? .white : .darkGray
+        return isDarkMode ? .white : UIColor(hexString: "#202020")
+    }()
+    
+    static var rootBackground: UIColor = {
+        return isDarkMode ? .black : UIColor(hexString: "#FAFAFA")
     }()
     
     static var background: UIColor = {
@@ -31,7 +35,7 @@ class Theme {
     
     static var accent: UIColor = {
 //        return UIColor(red: 0, green: 0.48, blue: 1, alpha: 1)
-        return isDarkMode ? UIColor(hexString: "#FAFAFA") : .darkGray
+        return isDarkMode ? UIColor(hexString: "#FAFAFA") : UIColor(hexString: "#202020")
     }()
     
     static var separator: UIColor = {

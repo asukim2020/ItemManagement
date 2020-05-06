@@ -12,7 +12,7 @@ class VCIdeaNote: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .green
+        view.backgroundColor = UIColor.green.withAlphaComponent(0.2)
     }
     
     

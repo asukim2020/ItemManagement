@@ -12,6 +12,6 @@ class VCMore: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .brown
+        view.backgroundColor = UIColor.brown.withAlphaComponent(0.2)
     }
 }

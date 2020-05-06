@@ -10,7 +10,6 @@
 		065BD139246069737B34C66D /* libPods-ItemManagement-ItemManagementUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99817B04EC82EFDA2AE558D6 /* libPods-ItemManagement-ItemManagementUITests.a */; };
 		12561B0D245FD16F003BA3F4 /* VCWeeklyList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12561B0C245FD16F003BA3F4 /* VCWeeklyList.swift */; };
 		12561B0F245FD1BA003BA3F4 /* VCCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12561B0E245FD1BA003BA3F4 /* VCCalendar.swift */; };
-		12561B11245FE76B003BA3F4 /* VCHomeTabBar + UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12561B10245FE76B003BA3F4 /* VCHomeTabBar + UI.swift */; };
 		12571639246085CD000998A1 /* KeyString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12571638246085CD000998A1 /* KeyString.swift */; };
 		1257163D24609C9D000998A1 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1257163C24609C9D000998A1 /* UIViewController.swift */; };
 		1257A4DC246101B9000AC606 /* VCIdeaNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1257A4DB246101B9000AC606 /* VCIdeaNote.swift */; };
@@ -18,7 +17,13 @@
 		1257A4E12461044E000AC606 /* VCMore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1257A4E02461044E000AC606 /* VCMore.swift */; };
 		1262D81724604F050068F801 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1262D81624604F050068F801 /* UIColor.swift */; };
 		1262D81A246056540068F801 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1262D819246056540068F801 /* Theme.swift */; };
+		126EA3962462B5BF00AAE462 /* VCWeeklyList + TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126EA3952462B5BF00AAE462 /* VCWeeklyList + TableView.swift */; };
+		126EA3992462B82100AAE462 /* VCWeeklyListItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126EA3982462B82100AAE462 /* VCWeeklyListItemCell.swift */; };
+		126EA39B2462B82C00AAE462 /* VCWeeklyListAddCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126EA39A2462B82B00AAE462 /* VCWeeklyListAddCell.swift */; };
+		126EA39E2462BB4200AAE462 /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126EA39D2462BB4200AAE462 /* CheckBox.swift */; };
+		126EA3A22462D7E700AAE462 /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126EA3A12462D7E700AAE462 /* UILabel.swift */; };
 		126F732624600E3500AC08CC /* Home.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 126F732524600E3500AC08CC /* Home.xcassets */; };
+		12715E8824627029000F0F3F /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12715E8724627029000F0F3F /* Item.swift */; };
 		12A5BDA0245E65BC001C2431 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A5BD9F245E65BC001C2431 /* AppDelegate.swift */; };
 		12A5BDA2245E65BC001C2431 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A5BDA1245E65BC001C2431 /* SceneDelegate.swift */; };
 		12A5BDA4245E65BC001C2431 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A5BDA3245E65BC001C2431 /* ContentView.swift */; };
@@ -54,7 +59,6 @@
 		037494DEA7A64E541984B067 /* libPods-ItemManagementTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ItemManagementTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		12561B0C245FD16F003BA3F4 /* VCWeeklyList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCWeeklyList.swift; sourceTree = "<group>"; };
 		12561B0E245FD1BA003BA3F4 /* VCCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCCalendar.swift; sourceTree = "<group>"; };
-		12561B10245FE76B003BA3F4 /* VCHomeTabBar + UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VCHomeTabBar + UI.swift"; sourceTree = "<group>"; };
 		12571638246085CD000998A1 /* KeyString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyString.swift; sourceTree = "<group>"; };
 		1257163C24609C9D000998A1 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		1257A4DB246101B9000AC606 /* VCIdeaNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCIdeaNote.swift; sourceTree = "<group>"; };
@@ -62,7 +66,13 @@
 		1257A4E02461044E000AC606 /* VCMore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCMore.swift; sourceTree = "<group>"; };
 		1262D81624604F050068F801 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		1262D819246056540068F801 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		126EA3952462B5BF00AAE462 /* VCWeeklyList + TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VCWeeklyList + TableView.swift"; sourceTree = "<group>"; };
+		126EA3982462B82100AAE462 /* VCWeeklyListItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCWeeklyListItemCell.swift; sourceTree = "<group>"; };
+		126EA39A2462B82B00AAE462 /* VCWeeklyListAddCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCWeeklyListAddCell.swift; sourceTree = "<group>"; };
+		126EA39D2462BB4200AAE462 /* CheckBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBox.swift; sourceTree = "<group>"; };
+		126EA3A12462D7E700AAE462 /* UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
 		126F732524600E3500AC08CC /* Home.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Home.xcassets; sourceTree = "<group>"; };
+		12715E8724627029000F0F3F /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		12A5BD9C245E65BC001C2431 /* ItemManagement.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ItemManagement.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		12A5BD9F245E65BC001C2431 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		12A5BDA1245E65BC001C2431 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -119,6 +129,8 @@
 			isa = PBXGroup;
 			children = (
 				12561B0C245FD16F003BA3F4 /* VCWeeklyList.swift */,
+				126EA3952462B5BF00AAE462 /* VCWeeklyList + TableView.swift */,
+				126EA3972462B7FE00AAE462 /* Cell */,
 			);
 			path = " WeeklyList";
 			sourceTree = "<group>";
@@ -136,6 +148,8 @@
 			children = (
 				12A5BD9F245E65BC001C2431 /* AppDelegate.swift */,
 				12A5BDA1245E65BC001C2431 /* SceneDelegate.swift */,
+				126EA39C2462BB3200AAE462 /* CustomView */,
+				12715E8624626FD5000F0F3F /* Realm */,
 				12571637246085AD000998A1 /* KeyString */,
 				1262D818246056490068F801 /* Theme */,
 				12561B14245FFAC1003BA3F4 /* Extension */,
@@ -149,6 +163,7 @@
 			children = (
 				1262D81624604F050068F801 /* UIColor.swift */,
 				1257163C24609C9D000998A1 /* UIViewController.swift */,
+				126EA3A12462D7E700AAE462 /* UILabel.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -181,7 +196,6 @@
 			isa = PBXGroup;
 			children = (
 				12A5BDD1245E673D001C2431 /* VCHomeTabBar.swift */,
-				12561B10245FE76B003BA3F4 /* VCHomeTabBar + UI.swift */,
 				1257A4DD24610269000AC606 /* VCHomeTabBar + CollectionView.swift */,
 			);
 			path = TabBar;
@@ -193,6 +207,31 @@
 				1262D819246056540068F801 /* Theme.swift */,
 			);
 			path = Theme;
+			sourceTree = "<group>";
+		};
+		126EA3972462B7FE00AAE462 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				126EA3982462B82100AAE462 /* VCWeeklyListItemCell.swift */,
+				126EA39A2462B82B00AAE462 /* VCWeeklyListAddCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		126EA39C2462BB3200AAE462 /* CustomView */ = {
+			isa = PBXGroup;
+			children = (
+				126EA39D2462BB4200AAE462 /* CheckBox.swift */,
+			);
+			path = CustomView;
+			sourceTree = "<group>";
+		};
+		12715E8624626FD5000F0F3F /* Realm */ = {
+			isa = PBXGroup;
+			children = (
+				12715E8724627029000F0F3F /* Item.swift */,
+			);
+			path = Realm;
 			sourceTree = "<group>";
 		};
 		12A5BD93245E65BC001C2431 = {
@@ -507,16 +546,21 @@
 				12A5BDA0245E65BC001C2431 /* AppDelegate.swift in Sources */,
 				12561B0D245FD16F003BA3F4 /* VCWeeklyList.swift in Sources */,
 				1257163D24609C9D000998A1 /* UIViewController.swift in Sources */,
+				126EA39E2462BB4200AAE462 /* CheckBox.swift in Sources */,
+				126EA39B2462B82C00AAE462 /* VCWeeklyListAddCell.swift in Sources */,
 				1257A4DE24610269000AC606 /* VCHomeTabBar + CollectionView.swift in Sources */,
 				12561B0F245FD1BA003BA3F4 /* VCCalendar.swift in Sources */,
+				126EA3A22462D7E700AAE462 /* UILabel.swift in Sources */,
 				1262D81724604F050068F801 /* UIColor.swift in Sources */,
 				12A5BDA2245E65BC001C2431 /* SceneDelegate.swift in Sources */,
 				12A5BDA4245E65BC001C2431 /* ContentView.swift in Sources */,
 				12571639246085CD000998A1 /* KeyString.swift in Sources */,
+				126EA3992462B82100AAE462 /* VCWeeklyListItemCell.swift in Sources */,
 				1257A4E12461044E000AC606 /* VCMore.swift in Sources */,
+				12715E8824627029000F0F3F /* Item.swift in Sources */,
+				126EA3962462B5BF00AAE462 /* VCWeeklyList + TableView.swift in Sources */,
 				1262D81A246056540068F801 /* Theme.swift in Sources */,
 				1257A4DC246101B9000AC606 /* VCIdeaNote.swift in Sources */,
-				12561B11245FE76B003BA3F4 /* VCHomeTabBar + UI.swift in Sources */,
 				12A5BDD2245E673D001C2431 /* VCHomeTabBar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
