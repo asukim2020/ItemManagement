@@ -16,7 +16,7 @@ class UICheckBox: UIView {
     
     weak var delegate: CheckBoxDelegate?
     let size: CGFloat = 18
-    let border: CGFloat = 2
+    let border: CGFloat = 1.5
     
     var isOn: Bool = false {
         didSet {
@@ -25,7 +25,6 @@ class UICheckBox: UIView {
             } else {
                 unChecked()
             }
-            delegate?.CheckBox(isOn: self.isOn)
         }
     }
     
@@ -33,9 +32,10 @@ class UICheckBox: UIView {
     private let ivCheckBox = UIImageView()
     
     override init(frame: CGRect) {
-         super.init(frame: frame)
+        super.init(frame: frame)
         setUpUI()
         displayUI()
+        self.isOn = false
     }
     
     required init?(coder: NSCoder) {
@@ -46,11 +46,13 @@ class UICheckBox: UIView {
     @objc private func checked() {
         vwSquare.isHidden = true
         ivCheckBox.isHidden = false
+        delegate?.CheckBox(isOn: self.isOn)
     }
     
     @objc private func unChecked() {
         vwSquare.isHidden = false
         ivCheckBox.isHidden = true
+        delegate?.CheckBox(isOn: self.isOn)
     }
     
     private func setUpUI() {
@@ -58,7 +60,7 @@ class UICheckBox: UIView {
         
         vwSquare.translatesAutoresizingMaskIntoConstraints = false
         vwSquare.isUserInteractionEnabled = true
-        vwSquare.layer.borderColor = Theme.accent.withAlphaComponent(0.7).cgColor
+        vwSquare.layer.borderColor = Theme.accent.withAlphaComponent(0.5).cgColor
         vwSquare.layer.borderWidth = border
         vwSquare.layer.cornerRadius = 3
         
@@ -67,13 +69,13 @@ class UICheckBox: UIView {
         vwSquare.isHidden = false
         
         ivCheckBox.translatesAutoresizingMaskIntoConstraints = false
-        ivCheckBox.image = #imageLiteral(resourceName: "checkbox_fill.png").withRenderingMode(.alwaysTemplate)
-        ivCheckBox.tintColor = Theme.accent.withAlphaComponent(0.7)
-        ivCheckBox.contentMode = .scaleAspectFill
+        ivCheckBox.image = UIImage(named: "checkbox_fill")?.withRenderingMode(.alwaysTemplate)
+        ivCheckBox.tintColor = Theme.accent.withAlphaComponent(0.5)
+        ivCheckBox.contentMode = .scaleAspectFit
         ivCheckBox.isUserInteractionEnabled = true
         let tapCheckBox = UITapGestureRecognizer(target: self, action: #selector(unChecked))
         ivCheckBox.addGestureRecognizer(tapCheckBox)
-        ivCheckBox.layer.cornerRadius = 4
+        ivCheckBox.layer.cornerRadius = 3
         ivCheckBox.clipsToBounds = true
         ivCheckBox.isHidden = true
     }

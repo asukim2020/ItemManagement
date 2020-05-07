@@ -9,7 +9,6 @@
 import UIKit
 
 extension UIViewController {
-    static var separatorSize: CGFloat = 0.7
     
     func setTopBarColor() {
         clearStatusBarColor()
@@ -34,7 +33,7 @@ extension UIViewController {
             separator.bottomAnchor.constraint(equalTo: v.bottomAnchor),
             separator.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             separator.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            separator.heightAnchor.constraint(equalToConstant: UIViewController.separatorSize)
+            separator.heightAnchor.constraint(equalToConstant: Global.separatorSize)
         ])
     }
     

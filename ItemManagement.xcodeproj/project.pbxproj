@@ -24,6 +24,8 @@
 		126EA3A22462D7E700AAE462 /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126EA3A12462D7E700AAE462 /* UILabel.swift */; };
 		126F732624600E3500AC08CC /* Home.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 126F732524600E3500AC08CC /* Home.xcassets */; };
 		12715E8824627029000F0F3F /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12715E8724627029000F0F3F /* Item.swift */; };
+		128E29AF2463F79B00475CBF /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128E29AE2463F79B00475CBF /* String.swift */; };
+		128E29B12463FA3500475CBF /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128E29B02463FA3500475CBF /* Global.swift */; };
 		12A5BDA0245E65BC001C2431 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A5BD9F245E65BC001C2431 /* AppDelegate.swift */; };
 		12A5BDA2245E65BC001C2431 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A5BDA1245E65BC001C2431 /* SceneDelegate.swift */; };
 		12A5BDA4245E65BC001C2431 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A5BDA3245E65BC001C2431 /* ContentView.swift */; };
@@ -73,6 +75,8 @@
 		126EA3A12462D7E700AAE462 /* UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
 		126F732524600E3500AC08CC /* Home.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Home.xcassets; sourceTree = "<group>"; };
 		12715E8724627029000F0F3F /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		128E29AE2463F79B00475CBF /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		128E29B02463FA3500475CBF /* Global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		12A5BD9C245E65BC001C2431 /* ItemManagement.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ItemManagement.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		12A5BD9F245E65BC001C2431 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		12A5BDA1245E65BC001C2431 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -151,7 +155,7 @@
 				126EA39C2462BB3200AAE462 /* CustomView */,
 				12715E8624626FD5000F0F3F /* Realm */,
 				12571637246085AD000998A1 /* KeyString */,
-				1262D818246056490068F801 /* Theme */,
+				1262D818246056490068F801 /* Global */,
 				12561B14245FFAC1003BA3F4 /* Extension */,
 				12A5BDD0245E6606001C2431 /* Home */,
 			);
@@ -164,6 +168,7 @@
 				1262D81624604F050068F801 /* UIColor.swift */,
 				1257163C24609C9D000998A1 /* UIViewController.swift */,
 				126EA3A12462D7E700AAE462 /* UILabel.swift */,
+				128E29AE2463F79B00475CBF /* String.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -201,12 +206,13 @@
 			path = TabBar;
 			sourceTree = "<group>";
 		};
-		1262D818246056490068F801 /* Theme */ = {
+		1262D818246056490068F801 /* Global */ = {
 			isa = PBXGroup;
 			children = (
 				1262D819246056540068F801 /* Theme.swift */,
+				128E29B02463FA3500475CBF /* Global.swift */,
 			);
-			path = Theme;
+			path = Global;
 			sourceTree = "<group>";
 		};
 		126EA3972462B7FE00AAE462 /* Cell */ = {
@@ -545,6 +551,7 @@
 			files = (
 				12A5BDA0245E65BC001C2431 /* AppDelegate.swift in Sources */,
 				12561B0D245FD16F003BA3F4 /* VCWeeklyList.swift in Sources */,
+				128E29AF2463F79B00475CBF /* String.swift in Sources */,
 				1257163D24609C9D000998A1 /* UIViewController.swift in Sources */,
 				126EA39E2462BB4200AAE462 /* CheckBox.swift in Sources */,
 				126EA39B2462B82C00AAE462 /* VCWeeklyListAddCell.swift in Sources */,
@@ -562,6 +569,7 @@
 				1262D81A246056540068F801 /* Theme.swift in Sources */,
 				1257A4DC246101B9000AC606 /* VCIdeaNote.swift in Sources */,
 				12A5BDD2245E673D001C2431 /* VCHomeTabBar.swift in Sources */,
+				128E29B12463FA3500475CBF /* Global.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

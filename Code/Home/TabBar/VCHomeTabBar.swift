@@ -65,7 +65,7 @@ class VCHomeTabBar: UIViewController {
             separator.topAnchor.constraint(equalTo: collectionView.topAnchor),
             separator.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             separator.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            separator.heightAnchor.constraint(equalToConstant: UIViewController.separatorSize),
+            separator.heightAnchor.constraint(equalToConstant: Global.separatorSize),
         ])
     }
     
