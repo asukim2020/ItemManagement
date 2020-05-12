@@ -21,9 +21,11 @@ class UICheckBox: UIView {
     var isOn: Bool = false {
         didSet {
             if self.isOn {
-                checked()
+                vwSquare.isHidden = true
+                ivCheckBox.isHidden = false
             } else {
-                unChecked()
+                vwSquare.isHidden = false
+                ivCheckBox.isHidden = true
             }
         }
     }
@@ -44,14 +46,12 @@ class UICheckBox: UIView {
     
     // TODO: 가능하면 애니매이션 넣어보기
     @objc private func checked() {
-        vwSquare.isHidden = true
-        ivCheckBox.isHidden = false
+        self.isOn = true
         delegate?.CheckBox(isOn: self.isOn)
     }
     
     @objc private func unChecked() {
-        vwSquare.isHidden = false
-        ivCheckBox.isHidden = true
+        self.isOn = false
         delegate?.CheckBox(isOn: self.isOn)
     }
     

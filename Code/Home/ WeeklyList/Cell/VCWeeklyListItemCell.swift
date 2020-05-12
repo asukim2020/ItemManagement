@@ -10,18 +10,17 @@ import UIKit
 
 protocol VCWeeklyListItemCellDelegate: class {
     func updateCellHeight()
+    func textViewDidChange(title: String, indexPath: IndexPath)
+    func updateIsComplete(isComplete: Bool, indexPath: IndexPath)
 }
 
 // MARK: - VCWeeklyListItemCell
-
-// TODO: - 완료 시 표기되는 셀
-// TODO: - 미완료 시 표기되는 셀
-// TODO: - 등록 시 표기되는 셀
 class VCWeeklyListItemCell: UITableViewCell {
     static let identifier: String = "VCWeeklyListItemCell"
     weak var delegate: VCWeeklyListItemCellDelegate?
     var titleText: String?
     var previousRect: CGRect?
+    var indexPath: IndexPath?
     
     private let fontHeight: CGFloat = 18
     private let margin: CGFloat = 12
@@ -29,9 +28,9 @@ class VCWeeklyListItemCell: UITableViewCell {
 
     lazy var checkBox = UICheckBox()
     
-    lazy var title = UILabel()
-    lazy var tvWrite = UITextView()
-    lazy var vwDummy = UIView()
+    var title: UILabel? = nil
+    var tvWrite: UITextView? = nil
+    var vwDummy: UIView? = nil
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -47,7 +46,8 @@ class VCWeeklyListItemCell: UITableViewCell {
         backgroundColor = .clear
         
         checkBox.translatesAutoresizingMaskIntoConstraints = false
-        checkBox.isUserInteractionEnabled = false
+        checkBox.isUserInteractionEnabled = true
+        checkBox.delegate = self
         
         addSubview(checkBox)
         NSLayoutConstraint.activate([
@@ -57,9 +57,21 @@ class VCWeeklyListItemCell: UITableViewCell {
         ])
     }
     
+    // MARK: - remve view
+    func removeSubViews() {
+        for view in subviews {
+            view.removeFromSuperview()
+        }
+    }
+    
     // MARK: - Incomplete UI
     func setUpIncompleteUI(_ text: String = "") {
+        removeSubViews()
         setUpCommonUI()
+        
+        self.title = UILabel()
+        
+        guard let title = self.title else { return }
         
         title.translatesAutoresizingMaskIntoConstraints = false
         title.text = text
@@ -77,32 +89,41 @@ class VCWeeklyListItemCell: UITableViewCell {
     }
     
     func setIncompleted() {
+        guard let title = self.title else { return }
         guard let text = titleText else { return }
-        self.title.attributedText = nil
-        self.title.text = text
+        title.attributedText = nil
+        title.text = text
     }
     
     // MARK: - Complete UI
     func setUpCompleteUI(_ text: String) {
         setUpIncompleteUI(text)
         setCompleted()
-        checkBox.isOn = true
     }
     
     func setCompleted() {
+        guard let title = self.title else { return }
         guard let text = titleText else { return }
-        self.title.text = ""
+        title.text = ""
         let attributeString = text.strikeThrough()
-        self.title.attributedText = attributeString
+        title.attributedText = attributeString
     }
     
     // MARK: - Input UI
-    func setUpInputUI() {
+    func setUpInputUI(_ text: String) {
+        removeSubViews()
         setUpCommonUI()
+        
+        self.tvWrite = UITextView()
+        self.vwDummy = UIView()
+        
+        guard let tvWrite = self.tvWrite else { return }
+        guard let vwDummy = self.vwDummy else { return }
         
         tvWrite.translatesAutoresizingMaskIntoConstraints = false
         tvWrite.setContents()
         tvWrite.delegate = self
+        tvWrite.text = text
         
         vwDummy.translatesAutoresizingMaskIntoConstraints = false
         vwDummy.backgroundColor = .clear
@@ -124,24 +145,33 @@ class VCWeeklyListItemCell: UITableViewCell {
     }
 }
 
+// MARK: - CheckBoxDelegate
+extension VCWeeklyListItemCell: CheckBoxDelegate {
+    func CheckBox(isOn: Bool) {
+        guard let indexPath = self.indexPath else { return }
+        delegate?.updateIsComplete(isComplete: isOn, indexPath: indexPath)
+    }
+}
+
 // MARK: - UITextViewDelegate
 extension VCWeeklyListItemCell: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         guard textView == self.tvWrite else { return }
-        if textView.text.count == 1 {
-            textView.text = textView.text.replacingOccurrences(of: " ", with: "")
+        
+        if let indexPath = indexPath {
+            delegate?.textViewDidChange(title: textView.text, indexPath: indexPath)
         }
-    }
-    
-    func textViewDidEndEditing(_ textView: UITextView) {
-        guard textView == self.tvWrite else { return }
-        if textView.text.count == 0 {
-            textView.text = " "
-        }
+        
+        tvWriteConstraint?.constant = textView.contentSize.height
+        delegate?.updateCellHeight()
     }
     
     func textViewDidChange(_ textView: UITextView) {
         guard textView == self.tvWrite else { return }
+        
+        if let indexPath = indexPath {
+            delegate?.textViewDidChange(title: textView.text, indexPath: indexPath)
+        }
         
         let pos = textView.endOfDocument
         let currentRect = textView.caretRect(for: pos)
@@ -152,7 +182,7 @@ extension VCWeeklyListItemCell: UITextViewDelegate {
         }
         
         if currentRect.origin.y != previousRect.origin.y {
-            tvWriteConstraint?.constant = tvWrite.contentSize.height
+            tvWriteConstraint?.constant = textView.contentSize.height
             delegate?.updateCellHeight()
             self.previousRect = currentRect
         }

@@ -19,7 +19,7 @@ class Theme {
     
     static var bar: UIColor = isDarkMode ? UIColor(red: 0.15, green: 0.15, blue: 0.15, alpha: 1) : .white
     
-    static var font: UIColor = isDarkMode ? .white : UIColor(hexString: "#202020")
+    static var font: UIColor = isDarkMode ? UIColor(hexString: "#FAFAFA") : UIColor(hexString: "#202020")
     
     // TODO: - 색상보고 변경할 것
     static var lightFont: UIColor = isDarkMode ? .lightGray : .lightGray

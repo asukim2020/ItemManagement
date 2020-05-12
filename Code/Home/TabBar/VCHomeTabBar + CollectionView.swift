@@ -73,7 +73,15 @@ extension VCHomeTabBar: UICollectionViewDelegate, UICollectionViewDataSource, UI
         cell.setImage(defaultIv: edgeImg, selectedIv: fillImg)
         
         if index == indexPath.row {
-            let vc = HomeTabBar.allCases[index].getVC()
+            let type = HomeTabBar.allCases[index]
+            let vc = type.getVC()
+            // TODO: - 테스트 용도 코드 ////
+            if type == .weeklyList {
+                weeklyList = vc as? VCWeeklyList
+            } else {
+                
+            }
+            ////////////////////////////
             loadVC(vc: vc)
             cell.activeImage()
         }
@@ -101,7 +109,7 @@ extension VCHomeTabBar: UICollectionViewDelegate, UICollectionViewDataSource, UI
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let size = collectionView.bounds.size
         let width = size.width / CGFloat(count)
-        return CGSize(width: width, height: height)
+        return CGSize(width: width, height: VCHomeTabBar.height)
     }
 }
 
@@ -144,9 +152,11 @@ fileprivate class Cell: UICollectionViewCell {
         
         self.defaultIv.image = defaultIv?.withRenderingMode(.alwaysTemplate)
         self.defaultIv.tintColor = Theme.accent
+        self.defaultIv.contentMode = .scaleAspectFit
         
         self.selectedIv.image = selectedIv?.withRenderingMode(.alwaysTemplate)
         self.selectedIv.tintColor = Theme.accent
+        self.selectedIv.contentMode = .scaleAspectFit
     }
     
     // TODO: 추후 color 지정

@@ -10,17 +10,17 @@
 import UIKit
 
 extension UILabel {
-    func setContents() {
-        font = UIFont.systemFont(ofSize: Global.fontSize)
+    func setContents(diff: CGFloat = 0, line: Int = 0) {
+        font = UIFont.systemFont(ofSize: Global.fontSize + diff)
         textColor = Theme.font
-        numberOfLines = 0
+        numberOfLines = line
         textAlignment = .left
     }
 }
 
 extension UITextView {
-    func setContents() {
-        font = UIFont.systemFont(ofSize: Global.fontSize)
+    func setContents(diff: CGFloat = 0) {
+        font = UIFont.systemFont(ofSize: Global.fontSize + diff)
         textColor = Theme.font
         textAlignment = .left
         text = " "
