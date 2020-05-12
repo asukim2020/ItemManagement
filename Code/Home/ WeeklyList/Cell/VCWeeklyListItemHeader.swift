@@ -23,7 +23,7 @@ class VCWeeklyListItemHedaer: UITableViewHeaderFooterView {
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         
-        backgroundView = BackgroundView(backgroundColor: UIColor.lightGray.withAlphaComponent(0.1))
+        backgroundView = BackgroundView(backgroundColor: Theme.separator)
         
         setUpUI()
         displayUI()
@@ -65,7 +65,7 @@ class VCWeeklyListItemHedaer: UITableViewHeaderFooterView {
         ivArrow.translatesAutoresizingMaskIntoConstraints = false
         ivArrow.image = UIImage(systemName: "chevron.up")?.withRenderingMode(.alwaysTemplate)
         ivArrow.tintColor = Theme.accent.withAlphaComponent(0.5)
-        ivArrow.contentMode = .scaleAspectFit
+        ivArrow.contentMode = .scaleAspectFill
         ivArrow.isUserInteractionEnabled = false
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(rotateArrow))
@@ -77,7 +77,7 @@ class VCWeeklyListItemHedaer: UITableViewHeaderFooterView {
         addSubview(title)
         addSubview(ivArrow)
         
-        let size: CGFloat = 15
+        let size: CGFloat = 12
         NSLayoutConstraint.activate([
             title.centerYAnchor.constraint(equalTo: centerYAnchor),
             title.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
