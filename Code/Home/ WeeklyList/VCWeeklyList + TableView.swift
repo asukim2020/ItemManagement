@@ -20,12 +20,20 @@ enum WeeklyListType {
 extension VCWeeklyList: UITableViewDelegate, UITableViewDataSource {
 
     func registerCell() {
+        tableView.register(VCWeeklyListItemHedaer.self, forHeaderFooterViewReuseIdentifier: VCWeeklyListItemHedaer.identifier)
         tableView.register(VCWeeklyListItemCell.self, forCellReuseIdentifier: VCWeeklyListItemCell.identifier)
         tableView.register(VCWeeklyListAddCell.self, forCellReuseIdentifier: VCWeeklyListAddCell.identifier)
     }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: VCWeeklyListItemHedaer.identifier) as! VCWeeklyListItemHedaer
+        header.setTitle(time: self.data[0].toDay)
+        header.delegate = self
+        return header
+    }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return data.count + 1
+        return data.count + (foldingFlag ? 0 : 1)
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -112,6 +120,43 @@ extension VCWeeklyList: UITableViewDelegate, UITableViewDataSource {
             }).dispose()
         }
     }
+}
+
+// MARK:- VCWeeklyListItemHedaerDelegate
+extension VCWeeklyList: VCWeeklyListItemHedaerDelegate {
+    func foldingSection() {
+        tableView.beginUpdates()
+        foldingFlag = true
+        
+        var indexPaths: [IndexPath] = []
+        for (idx, _) in data.enumerated() {
+            indexPaths.append(IndexPath(row: idx, section: 0))
+        }
+        indexPaths.append(IndexPath(row: indexPaths.count, section: 0))
+        
+        data.removeAll()
+        tableView.deleteRows(at: indexPaths, with: .top)
+        tableView.endUpdates()
+    }
+    
+    func unFoldingSection() {
+        guard let data = Item.getDayList(date: Date()) else { return }
+
+        tableView.beginUpdates()
+        foldingFlag = false
+        
+        self.data = data
+        var indexPaths: [IndexPath] = []
+        for (idx, _) in data.enumerated() {
+            indexPaths.append(IndexPath(row: idx, section: 0))
+        }
+        indexPaths.append(IndexPath(row: indexPaths.count, section: 0))
+        
+        tableView.insertRows(at: indexPaths, with: .top)
+        tableView.endUpdates()
+    }
+    
+    
 }
 
 // MARK: - VCWeeklyListItemCellDelegate

@@ -13,4 +13,6 @@ class Global {
     static let fontSize: CGFloat = 15
     
     static let separatorSize: CGFloat = 0.7
+    
+    static let locale: Locale = Locale(identifier: Locale.current.languageCode ?? "EN")
 }

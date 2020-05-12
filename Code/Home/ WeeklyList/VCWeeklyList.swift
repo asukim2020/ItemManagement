@@ -10,13 +10,14 @@ import UIKit
 
 class VCWeeklyList: UIViewController {
     
-    let tableView = UITableView()
+    let tableView = UITableView(frame: .zero, style: .grouped)
     let toolBar = ToolBar()
     var toolBarConstraint: NSLayoutConstraint?
     // TODO: - 2차원 배열로 변경할 것 - 7일치 데이터 받아아도록
     var data: [Item] = []
     var editIndex: IndexPath?
     var keyboardHideFlag: Bool = false
+    var foldingFlag: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +26,7 @@ class VCWeeklyList: UIViewController {
         setUpUI()
         displayUI()
         registerCell()
+        
         if let data = Item.getDayList(date: Date()) {
             self.data = data
         }
@@ -81,13 +83,11 @@ class VCWeeklyList: UIViewController {
     func setUpUI() {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.backgroundColor = .clear
-        
         tableView.delegate = self
         tableView.dataSource = self
         
         tableView.rowHeight = UITableView.automaticDimension
-        
-        tableView.sectionHeaderHeight = 0.01
+        tableView.sectionHeaderHeight = 30
         tableView.sectionFooterHeight = 0.01
         
         tableView.tableFooterView = UIView()

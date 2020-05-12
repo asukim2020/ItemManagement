@@ -15,6 +15,8 @@
 		1257A4DC246101B9000AC606 /* VCIdeaNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1257A4DB246101B9000AC606 /* VCIdeaNote.swift */; };
 		1257A4DE24610269000AC606 /* VCHomeTabBar + CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1257A4DD24610269000AC606 /* VCHomeTabBar + CollectionView.swift */; };
 		1257A4E12461044E000AC606 /* VCMore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1257A4E02461044E000AC606 /* VCMore.swift */; };
+		125F3A01246A664700D1F881 /* VCWeeklyListItemHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125F3A00246A664700D1F881 /* VCWeeklyListItemHeader.swift */; };
+		125F3A03246A77FA00D1F881 /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125F3A02246A77FA00D1F881 /* BackgroundView.swift */; };
 		1262D81724604F050068F801 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1262D81624604F050068F801 /* UIColor.swift */; };
 		1262D81A246056540068F801 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1262D819246056540068F801 /* Theme.swift */; };
 		126EA3962462B5BF00AAE462 /* VCWeeklyList + TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126EA3952462B5BF00AAE462 /* VCWeeklyList + TableView.swift */; };
@@ -69,6 +71,8 @@
 		1257A4DB246101B9000AC606 /* VCIdeaNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCIdeaNote.swift; sourceTree = "<group>"; };
 		1257A4DD24610269000AC606 /* VCHomeTabBar + CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VCHomeTabBar + CollectionView.swift"; sourceTree = "<group>"; };
 		1257A4E02461044E000AC606 /* VCMore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCMore.swift; sourceTree = "<group>"; };
+		125F3A00246A664700D1F881 /* VCWeeklyListItemHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCWeeklyListItemHeader.swift; sourceTree = "<group>"; };
+		125F3A02246A77FA00D1F881 /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
 		1262D81624604F050068F801 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		1262D819246056540068F801 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		126EA3952462B5BF00AAE462 /* VCWeeklyList + TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VCWeeklyList + TableView.swift"; sourceTree = "<group>"; };
@@ -229,6 +233,7 @@
 			children = (
 				126EA3982462B82100AAE462 /* VCWeeklyListItemCell.swift */,
 				126EA39A2462B82B00AAE462 /* VCWeeklyListAddCell.swift */,
+				125F3A00246A664700D1F881 /* VCWeeklyListItemHeader.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -238,6 +243,7 @@
 			children = (
 				126EA39D2462BB4200AAE462 /* CheckBox.swift */,
 				127CCDCF2466A878003C0EEA /* ToolBar.swift */,
+				125F3A02246A77FA00D1F881 /* BackgroundView.swift */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -585,12 +591,14 @@
 				12A5BDA4245E65BC001C2431 /* ContentView.swift in Sources */,
 				12571639246085CD000998A1 /* KeyString.swift in Sources */,
 				126EA3992462B82100AAE462 /* VCWeeklyListItemCell.swift in Sources */,
+				125F3A03246A77FA00D1F881 /* BackgroundView.swift in Sources */,
 				1257A4E12461044E000AC606 /* VCMore.swift in Sources */,
 				12715E8824627029000F0F3F /* Item.swift in Sources */,
 				126EA3962462B5BF00AAE462 /* VCWeeklyList + TableView.swift in Sources */,
 				1262D81A246056540068F801 /* Theme.swift in Sources */,
 				1257A4DC246101B9000AC606 /* VCIdeaNote.swift in Sources */,
 				127CCDCC24667BF9003C0EEA /* Date.swift in Sources */,
+				125F3A01246A664700D1F881 /* VCWeeklyListItemHeader.swift in Sources */,
 				12A5BDD2245E673D001C2431 /* VCHomeTabBar.swift in Sources */,
 				128E29B12463FA3500475CBF /* Global.swift in Sources */,
 			);
