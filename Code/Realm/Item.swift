@@ -22,7 +22,7 @@ import RxSwift
     dynamic var isComplete: Bool = false
     
     // 정렬 순서
-    dynamic var order: Int = -1
+    dynamic var order: Double = -1.0
     
     // 지정한 날짜
     dynamic var toDay: TimeInterval = 0.0
@@ -38,7 +38,7 @@ import RxSwift
                 let realm = try Realm()
                 if item.key == 0 {
                     item.key = Int64(date.timeIntervalSince1970 * 1000)
-                    item.order = (realm.objects(Item.self).sorted(byKeyPath: "order", ascending: false).first?.order ?? 0) + 1
+                    item.order = (realm.objects(Item.self).sorted(byKeyPath: "order").last?.order ?? 0.0) + 1.0
                     item.toDay = date.startOfDay.timeIntervalSince1970
                 }
                 

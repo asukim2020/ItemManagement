@@ -126,10 +126,11 @@ extension VCWeeklyList: UITableViewDelegate, UITableViewDataSource {
         -> UISwipeActionsConfiguration? {
             let deleteAction = UIContextualAction(style: .destructive, title: nil) { (_, _, completionHandler) in
                 // delete the item here
-                guard let removeData = self.data[safe: indexPath.section]?.items.remove(at: indexPath.row) else {
+                guard let removeData = self.getItem(indexPath) else {
                     completionHandler(true)
                     return
                 }
+                self.data[safe: indexPath.section]?.items.remove(at: indexPath.row)
                 tableView.deleteRows(at: [indexPath], with: .automatic)
                 
                 guard let realm = try? Realm() else { return }
