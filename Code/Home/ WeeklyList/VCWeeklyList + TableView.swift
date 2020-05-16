@@ -75,15 +75,14 @@ extension VCWeeklyList: UITableViewDelegate, UITableViewDataSource {
             cell.delegate = self
             cell.selectionStyle = .none
             
-            let data = self.data[indexPath.row]
-            cell.checkBox.isOn = data.isComplete
+            cell.checkBox.isOn = item.isComplete
             cell.indexPath = indexPath
             
             if item.key == 0 || editIndex == indexPath {
                 cell.setUpInputUI(item.title)
                 self.editIndex = indexPath
                 cell.tvWrite?.becomeFirstResponder()
-            } else if data.isComplete {
+            } else if item.isComplete {
                 cell.setUpCompleteUI(item.title)
             } else {
                 cell.setUpIncompleteUI(item.title)
@@ -98,6 +97,7 @@ extension VCWeeklyList: UITableViewDelegate, UITableViewDataSource {
         
         switch cell {
         case is VCWeeklyListItemCell:
+            inputActive = cell as? VCWeeklyListItemCell
             addEditingItem() { [weak self] in
                 self?.editIndex = indexPath
                 tableView.reloadRows(at: [indexPath], with: .automatic)
@@ -108,8 +108,7 @@ extension VCWeeklyList: UITableViewDelegate, UITableViewDataSource {
         case is VCWeeklyListAddCell:
             addEditingItem() { [weak self] in
                 tableView.beginUpdates()
-                var items = self?.getItems(indexPath)
-                items?.append(Item())
+                self?.data[safe: indexPath.section]?.items.append(Item())
                 tableView.insertRows(at: [indexPath], with: .automatic)
                 tableView.endUpdates()
             }
@@ -148,7 +147,7 @@ extension VCWeeklyList: UITableViewDelegate, UITableViewDataSource {
 // MARK:- VCWeeklyListItemHedaerDelegate
 extension VCWeeklyList: VCWeeklyListItemHedaerDelegate {
     func foldingSection(section: Int, isComplete: Bool) {
-        guard var items = getItems(section) else { return }
+        guard let items = getItems(section) else { return }
         
         tableView.beginUpdates()
         foldingFlag = true
@@ -158,7 +157,7 @@ extension VCWeeklyList: VCWeeklyListItemHedaerDelegate {
         }
         indexPaths.append(IndexPath(row: indexPaths.count, section: section))
         
-        items.removeAll()
+        self.data[safe: section]?.items.removeAll()
         tableView.deleteRows(at: indexPaths, with: .top)
         tableView.endUpdates()
     }
@@ -170,6 +169,7 @@ extension VCWeeklyList: VCWeeklyListItemHedaerDelegate {
         tableView.beginUpdates()
         foldingFlag = false
         
+        self.data[safe: section]?.items = data
         items = data
         var indexPaths: [IndexPath] = []
         for (idx, _) in items.enumerated() {
@@ -207,7 +207,7 @@ extension VCWeeklyList: VCWeeklyListItemCellDelegate {
     func updateIsComplete(isComplete: Bool, indexPath: IndexPath) {
         guard let realm = try? Realm() else { return }
         try? realm.write {
-            self.data[indexPath.row].isComplete = isComplete
+            self.data[safe: indexPath.section]?.items[safe: indexPath.row]?.isComplete = isComplete
             DispatchQueue.main.async {
                 self.tableView.reloadRows(at: [indexPath], with: .automatic)
             }

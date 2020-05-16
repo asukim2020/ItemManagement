@@ -33,6 +33,8 @@ class VCWeeklyList: UIViewController {
     var editIndex: IndexPath?
     var keyboardHideFlag: Bool = false
     var foldingFlag: Bool = false
+    weak var inputActive: VCWeeklyListItemCell?
+    var tableViewContentOffset: CGFloat = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,9 +87,26 @@ class VCWeeklyList: UIViewController {
             let safeBottom: CGFloat = (window?.safeAreaInsets.bottom ?? 0) + VCHomeTabBar.height
 
             self.toolBar.isHidden = false
+            let height = keyboardHeight - safeBottom + self.toolBar.height
+            let contentInset = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
+            let myheight = tableView.frame.height
+            let keyboardEndPoint = myheight - keyboardHeight
+            
+            if let inputActive = self.inputActive,
+                let pointInTable = inputActive.superview?.convert(inputActive.frame.origin, to: tableView) {
+                let textFieldBottomPoint = pointInTable.y + inputActive.frame.size.height + 20
+                if keyboardEndPoint <= textFieldBottomPoint {
+                    tableViewContentOffset = tableView.contentOffset.y
+                    print("⚽️ tableView.contentOffset.y: \(tableView.contentOffset.y)")
+                    tableView.contentOffset.y = textFieldBottomPoint - keyboardEndPoint
+                    print("⚽️ keyboardWillShow")
+                    print("⚽️ tableView.contentOffset.y: \(tableView.contentOffset.y)")
+                }
+            }
+            
             UIView.animate(withDuration: 0.3, animations: {
-                self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight - safeBottom + self.toolBar.height, right: 0)
-                self.toolBarConstraint?.constant = -(keyboardHeight - safeBottom + self.toolBar.height)
+                self.tableView.contentInset = contentInset
+                self.toolBarConstraint?.constant = -height
                 self.view.layoutIfNeeded()
             })
         }
@@ -95,6 +114,10 @@ class VCWeeklyList: UIViewController {
 
     @objc func keyboardWillHide(notification: Notification) {
         guard keyboardHideFlag else { return }
+        print("⚽️ keyboardWillHide")
+        print("⚽️ tableView.contentOffset.y: \(tableView.contentOffset.y)")
+        inputActive = nil
+        tableView.contentOffset.y = tableViewContentOffset
         
         UIView.animate(withDuration: 0.3, animations: {
             self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
