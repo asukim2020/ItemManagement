@@ -142,6 +142,7 @@ class VCWeeklyListItemCell: UITableViewCell {
             vwDummy.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -margin),
         ])
         tvWriteConstraint?.isActive = true
+        tvWrite.becomeFirstResponder()
     }
 }
 

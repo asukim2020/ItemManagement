@@ -18,10 +18,22 @@ class VCWeeklyListItemHedaer: UITableViewHeaderFooterView {
     weak var delegate: VCWeeklyListItemHedaerDelegate?
     
     let title = UILabel()
-    let ivArrow = UIImageView()
+    let ivUpArrow = UIImageView()
+    let ivDownArrow = UIImageView()
     
     var section: Int = -1
     var isComplete: Bool = false
+    var foldingFlag: Bool = false {
+        didSet {
+            if foldingFlag {
+                ivUpArrow.isHidden = true
+                ivDownArrow.isHidden = false
+            } else {
+                ivUpArrow.isHidden = false
+                ivDownArrow.isHidden = true
+            }
+        }
+    }
     
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
@@ -51,15 +63,9 @@ class VCWeeklyListItemHedaer: UITableViewHeaderFooterView {
     }
     
     @objc func rotateArrow() {
-        if self.ivArrow.transform == .identity {
-            UIView.animate(withDuration: 0.3, animations: {
-                self.ivArrow.transform = self.ivArrow.transform.rotated(by: .pi)
-            })
+        if !foldingFlag {
             self.delegate?.foldingSection(section: section, isComplete: isComplete)
         } else {
-            UIView.animate(withDuration: 0.3, animations: {
-                self.ivArrow.transform = .identity
-            })
             self.delegate?.unFoldingSection(section: section, isComplete: isComplete)
         }
     }
@@ -69,11 +75,17 @@ class VCWeeklyListItemHedaer: UITableViewHeaderFooterView {
         title.setContents(diff: -3, line: 1)
         title.isUserInteractionEnabled = false
         
-        ivArrow.translatesAutoresizingMaskIntoConstraints = false
-        ivArrow.image = UIImage(systemName: "chevron.up")?.withRenderingMode(.alwaysTemplate)
-        ivArrow.tintColor = Theme.accent.withAlphaComponent(0.5)
-        ivArrow.contentMode = .scaleAspectFill
-        ivArrow.isUserInteractionEnabled = false
+        ivUpArrow.translatesAutoresizingMaskIntoConstraints = false
+        ivUpArrow.image = UIImage(systemName: "chevron.up")?.withRenderingMode(.alwaysTemplate)
+        ivUpArrow.tintColor = Theme.accent.withAlphaComponent(0.5)
+        ivUpArrow.contentMode = .scaleAspectFill
+        ivUpArrow.isUserInteractionEnabled = false
+        
+        ivDownArrow.translatesAutoresizingMaskIntoConstraints = false
+        ivDownArrow.image = UIImage(systemName: "chevron.down")?.withRenderingMode(.alwaysTemplate)
+        ivDownArrow.tintColor = Theme.accent.withAlphaComponent(0.5)
+        ivDownArrow.contentMode = .scaleAspectFill
+        ivDownArrow.isUserInteractionEnabled = false
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(rotateArrow))
         addGestureRecognizer(tap)
@@ -82,18 +94,24 @@ class VCWeeklyListItemHedaer: UITableViewHeaderFooterView {
     
     private func displayUI() {
         addSubview(title)
-        addSubview(ivArrow)
+        addSubview(ivUpArrow)
+        addSubview(ivDownArrow)
         
         let size: CGFloat = 14
         NSLayoutConstraint.activate([
             title.centerYAnchor.constraint(equalTo: centerYAnchor),
             title.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
-            title.trailingAnchor.constraint(equalTo: ivArrow.leadingAnchor, constant: -15),
+            title.trailingAnchor.constraint(equalTo: ivUpArrow.leadingAnchor, constant: -15),
             
-            ivArrow.centerYAnchor.constraint(equalTo: title.centerYAnchor),
-            ivArrow.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
-            ivArrow.widthAnchor.constraint(equalToConstant: size),
-            ivArrow.heightAnchor.constraint(equalToConstant: size),
+            ivUpArrow.centerYAnchor.constraint(equalTo: title.centerYAnchor),
+            ivUpArrow.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
+            ivUpArrow.widthAnchor.constraint(equalToConstant: size),
+            ivUpArrow.heightAnchor.constraint(equalToConstant: size),
+            
+            ivDownArrow.centerYAnchor.constraint(equalTo: title.centerYAnchor),
+            ivDownArrow.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
+            ivDownArrow.widthAnchor.constraint(equalToConstant: size),
+            ivDownArrow.heightAnchor.constraint(equalToConstant: size),
         ])
     }
 }

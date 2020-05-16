@@ -42,17 +42,22 @@ extension VCWeeklyList: UITableViewDelegate, UITableViewDataSource {
         header.delegate = self
         header.section = section
         header.isComplete = data.isComplete
+        header.foldingFlag = data.foldingFlag
         return header
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        // TODO: - 필터 기능에 대한 기능 추가 - 현재 1일 기준으로 시작
-        return 1
+        return self.data.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let items = getItems(section) else { return  1 }
-        return items.count + (foldingFlag ? 0 : 1)
+        if let data = self.data[safe: section] {
+            if data.isComplete {
+                return items.count
+            }
+        }
+        return items.count + ((self.data[safe: section]?.foldingFlag ?? false) ? 0 : 1)
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -81,7 +86,6 @@ extension VCWeeklyList: UITableViewDelegate, UITableViewDataSource {
             if item.key == 0 || editIndex == indexPath {
                 cell.setUpInputUI(item.title)
                 self.editIndex = indexPath
-                cell.tvWrite?.becomeFirstResponder()
             } else if item.isComplete {
                 cell.setUpCompleteUI(item.title)
             } else {
@@ -138,6 +142,7 @@ extension VCWeeklyList: UITableViewDelegate, UITableViewDataSource {
                     complete?()
                 },
                 onError: { error in
+                    print("⚽️ error: \(error)")
                     // TODO: - 예외처리 다이얼로그 띄우거나 toast 메시지 띄우기
             }).dispose()
         }
@@ -147,41 +152,21 @@ extension VCWeeklyList: UITableViewDelegate, UITableViewDataSource {
 // MARK:- VCWeeklyListItemHedaerDelegate
 extension VCWeeklyList: VCWeeklyListItemHedaerDelegate {
     func foldingSection(section: Int, isComplete: Bool) {
-        guard let items = getItems(section) else { return }
-        
-        tableView.beginUpdates()
-        foldingFlag = true
-        var indexPaths: [IndexPath] = []
-        for (idx, _) in items.enumerated() {
-            indexPaths.append(IndexPath(row: idx, section: section))
-        }
-        indexPaths.append(IndexPath(row: indexPaths.count, section: section))
-        
+        toolBar.isHidden = true
+        self.data[safe: section]?.foldingFlag = true
         self.data[safe: section]?.items.removeAll()
-        tableView.deleteRows(at: indexPaths, with: .top)
-        tableView.endUpdates()
+        tableView.reloadSections([section], with: .automatic)
     }
     
     func unFoldingSection(section: Int, isComplete: Bool) {
-        guard let data = Item.getDayList(date: Date()) else { return }
-        guard var items = getItems(section) else { return }
-
-        tableView.beginUpdates()
-        foldingFlag = false
-        
-        self.data[safe: section]?.items = data
-        items = data
-        var indexPaths: [IndexPath] = []
-        for (idx, _) in items.enumerated() {
-            indexPaths.append(IndexPath(row: idx, section: 0))
+        if let data = Item.getDayList(date: Date(), isComplete: isComplete) {
+            self.data[safe: section]?.items = data
+        } else {
+            self.data[safe: section]?.items = []
         }
-        indexPaths.append(IndexPath(row: indexPaths.count, section: 0))
-        
-        tableView.insertRows(at: indexPaths, with: .top)
-        tableView.endUpdates()
+        self.data[safe: section]?.foldingFlag = false
+        tableView.reloadSections([section], with: .automatic)
     }
-    
-    
 }
 
 // MARK: - VCWeeklyListItemCellDelegate
@@ -205,11 +190,47 @@ extension VCWeeklyList: VCWeeklyListItemCellDelegate {
     }
     
     func updateIsComplete(isComplete: Bool, indexPath: IndexPath) {
+        self.toolBar.isHidden = true
         guard let realm = try? Realm() else { return }
-        try? realm.write {
+        try? realm.write { [weak self] in
+            guard let self = self else { return }
             self.data[safe: indexPath.section]?.items[safe: indexPath.row]?.isComplete = isComplete
+            updateUIIsComplete(isComplete: isComplete, indexPath: indexPath)
+        }
+    }
+    
+    func updateUIIsComplete(isComplete: Bool, indexPath: IndexPath) {
+        guard let removeData = self.data[safe: indexPath.section]?.items.remove(at: indexPath.row) else { return }
+        
+        if isComplete {
+            // 완료로 변경되는 경우
+            if (self.data[safe: indexPath.section + 1]?.isComplete ?? false) {
+                // 섹션이 있는 경우
+                self.data[safe: indexPath.section + 1]?.items.append(removeData)
+                self.data[safe: indexPath.section + 1]?.items =
+                    self.data[safe: indexPath.section + 1]!.items.sorted { $0.order < $1.order }
+                DispatchQueue.main.async {
+                    self.tableView.reloadSections([indexPath.section, indexPath.section + 1], with: .automatic)
+                }
+            } else {
+                // 섹션이 없는 경우
+                let info = ItemsInfo(time: removeData.toDay,
+                                     isComplete: removeData.isComplete,
+                                     items: [removeData],
+                                     foldingFlag: false)
+                
+                self.data.insert(info, at: indexPath.section + 1)
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
+        } else {
+            // 미완료로 변경된 경우
+            self.data[safe: indexPath.section - 1]?.items.append(removeData)
+            self.data[safe: indexPath.section - 1]?.items =
+                self.data[safe: indexPath.section - 1]!.items.sorted { $0.order < $1.order }
             DispatchQueue.main.async {
-                self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                self.tableView.reloadSections([indexPath.section - 1, indexPath.section], with: .automatic)
             }
         }
     }

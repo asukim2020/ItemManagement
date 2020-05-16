@@ -67,7 +67,9 @@ import RxSwift
                 startOfDay,
                 endOfDay,
                 isComplete
-            )
+            ).sorted {
+                $0.order < $1.order
+            }
             
             if list.count == 0 {
                 return nil

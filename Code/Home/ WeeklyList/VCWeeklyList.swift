@@ -12,14 +12,17 @@ class ItemsInfo {
     var time: TimeInterval
     var isComplete: Bool
     var items: [Item]
+    var foldingFlag: Bool
     
     init(time: TimeInterval,
          isComplete: Bool,
-         items: [Item]
+         items: [Item],
+         foldingFlag: Bool
     ) {
         self.time = time
         self.isComplete = isComplete
         self.items = items
+        self.foldingFlag = foldingFlag
     }
 }
 
@@ -46,10 +49,24 @@ class VCWeeklyList: UIViewController {
         
         // TODO: 여러일 데이터도 받을 수 있도록 수정
         if let data = Item.getDayList(date: Date()) {
-            let info = ItemsInfo(time: data[0].toDay, isComplete: data[0].isComplete, items: data)
+            let info = ItemsInfo(time: data[0].toDay,
+                                 isComplete: data[0].isComplete,
+                                 items: data,
+                                 foldingFlag: false)
             self.data.append(info)
         } else {
-            let info = ItemsInfo(time: Date().timeIntervalSince1970, isComplete: false, items: [])
+            let info = ItemsInfo(time: Date().timeIntervalSince1970,
+                                 isComplete: false,
+                                 items: [],
+                                 foldingFlag: false)
+            self.data.append(info)
+        }
+        
+        if let data = Item.getDayList(date: Date(), isComplete: true) {
+            let info = ItemsInfo(time: data[0].toDay,
+                                 isComplete: data[0].isComplete,
+                                 items: data,
+                                 foldingFlag: false)
             self.data.append(info)
         }
         
@@ -97,10 +114,10 @@ class VCWeeklyList: UIViewController {
                 let textFieldBottomPoint = pointInTable.y + inputActive.frame.size.height + 20
                 if keyboardEndPoint <= textFieldBottomPoint {
                     tableViewContentOffset = tableView.contentOffset.y
-                    print("⚽️ tableView.contentOffset.y: \(tableView.contentOffset.y)")
+//                    print("⚽️ tableView.contentOffset.y: \(tableView.contentOffset.y)")
                     tableView.contentOffset.y = textFieldBottomPoint - keyboardEndPoint
-                    print("⚽️ keyboardWillShow")
-                    print("⚽️ tableView.contentOffset.y: \(tableView.contentOffset.y)")
+//                    print("⚽️ keyboardWillShow")
+//                    print("⚽️ tableView.contentOffset.y: \(tableView.contentOffset.y)")
                 }
             }
             
@@ -114,8 +131,8 @@ class VCWeeklyList: UIViewController {
 
     @objc func keyboardWillHide(notification: Notification) {
         guard keyboardHideFlag else { return }
-        print("⚽️ keyboardWillHide")
-        print("⚽️ tableView.contentOffset.y: \(tableView.contentOffset.y)")
+//        print("⚽️ keyboardWillHide")
+//        print("⚽️ tableView.contentOffset.y: \(tableView.contentOffset.y)")
         inputActive = nil
         tableView.contentOffset.y = tableViewContentOffset
         

@@ -56,8 +56,14 @@ class VCHomeTabBar: UIViewController {
     }
     
     @objc func addTapped() {
-        weeklyList?.tableView.beginUpdates()
-        weeklyList?.tableView.endUpdates()
+        Item.removeAll().subscribe(
+            onNext: { [weak self] items in
+                self?.weeklyList?.tableView.reloadData()
+                print("⚽️ items: \(items)")
+            }, onError: { error in
+                print("⚽️ error: \(error)")
+            }
+        ).dispose()
     }
     
     func setUpUI() {
