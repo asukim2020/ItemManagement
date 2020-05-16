@@ -84,6 +84,7 @@ extension VCWeeklyList: UITableViewDelegate, UITableViewDataSource {
             cell.indexPath = indexPath
             
             if item.key == 0 || editIndex == indexPath {
+                inputActive = cell
                 cell.setUpInputUI(item.title)
                 self.editIndex = indexPath
             } else if item.isComplete {
@@ -119,6 +120,29 @@ extension VCWeeklyList: UITableViewDelegate, UITableViewDataSource {
         default:
             break
         }
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
+        -> UISwipeActionsConfiguration? {
+            let deleteAction = UIContextualAction(style: .destructive, title: nil) { (_, _, completionHandler) in
+                // delete the item here
+                guard let removeData = self.data[safe: indexPath.section]?.items.remove(at: indexPath.row) else {
+                    completionHandler(true)
+                    return
+                }
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+                
+                guard let realm = try? Realm() else { return }
+                try? realm.write {
+                    realm.delete(removeData)
+                }
+                
+                completionHandler(true)
+            }
+            deleteAction.image = UIImage(systemName: "trash")
+            deleteAction.backgroundColor = UIColor(hexString: "#FA5858")
+            let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+            return configuration
     }
     
     func addEditingItem(complete: (() -> ())? = nil) {

@@ -19,7 +19,7 @@ class BackgroundView: UIView {
         self.init(frame: .zero)
         
         setUpUI(backgroundColor)
-        self.backgroundColor = .white
+        self.backgroundColor = Theme.background
     }
     
     let view = UIView()

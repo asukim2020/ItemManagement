@@ -142,7 +142,11 @@ class VCWeeklyListItemCell: UITableViewCell {
             vwDummy.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -margin),
         ])
         tvWriteConstraint?.isActive = true
-        tvWrite.becomeFirstResponder()
+        
+        // TODO: - 큐를 뒤로 미룰 수 있는 방법 알게되면 고치기
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            tvWrite.becomeFirstResponder()
+        }
     }
 }
 

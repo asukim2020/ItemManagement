@@ -130,10 +130,10 @@ class VCWeeklyList: UIViewController {
     }
 
     @objc func keyboardWillHide(notification: Notification) {
+        inputActive = nil
         guard keyboardHideFlag else { return }
 //        print("⚽️ keyboardWillHide")
 //        print("⚽️ tableView.contentOffset.y: \(tableView.contentOffset.y)")
-        inputActive = nil
         tableView.contentOffset.y = tableViewContentOffset
         
         UIView.animate(withDuration: 0.3, animations: {
