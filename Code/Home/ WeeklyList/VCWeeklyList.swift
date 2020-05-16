@@ -8,13 +8,28 @@
 
 import UIKit
 
+class ItemsInfo {
+    var time: TimeInterval
+    var isComplete: Bool
+    var items: [Item]
+    
+    init(time: TimeInterval,
+         isComplete: Bool,
+         items: [Item]
+    ) {
+        self.time = time
+        self.isComplete = isComplete
+        self.items = items
+    }
+}
+
 class VCWeeklyList: UIViewController {
     
     let tableView = UITableView(frame: .zero, style: .grouped)
     let toolBar = ToolBar()
     var toolBarConstraint: NSLayoutConstraint?
     // TODO: - 2차원 배열로 변경할 것 - 7일치 데이터 받아아도록
-    var data: [Item] = []
+    var data: [ItemsInfo] = []
     var editIndex: IndexPath?
     var keyboardHideFlag: Bool = false
     var foldingFlag: Bool = false
@@ -27,8 +42,13 @@ class VCWeeklyList: UIViewController {
         displayUI()
         registerCell()
         
+        // TODO: 여러일 데이터도 받을 수 있도록 수정
         if let data = Item.getDayList(date: Date()) {
-            self.data = data
+            let info = ItemsInfo(time: data[0].toDay, isComplete: data[0].isComplete, items: data)
+            self.data.append(info)
+        } else {
+            let info = ItemsInfo(time: Date().timeIntervalSince1970, isComplete: false, items: [])
+            self.data.append(info)
         }
         
         NotificationCenter.default.addObserver(
@@ -43,6 +63,18 @@ class VCWeeklyList: UIViewController {
             name: UIResponder.keyboardWillHideNotification,
             object: nil
         )
+    }
+    
+    func getItems(_ indexPath: IndexPath) -> [Item]? {
+        return data[safe: indexPath.section]?.items
+    }
+    
+    func getItems(_ section: Int) -> [Item]? {
+        return data[safe: section]?.items
+    }
+    
+    func getItem(_ indexPath: IndexPath) -> Item? {
+        return data[safe: indexPath.section]?.items[safe: indexPath.row]
     }
     
     // MARK: - keyboard notification
@@ -69,7 +101,7 @@ class VCWeeklyList: UIViewController {
             self.toolBarConstraint?.constant = VCHomeTabBar.height + 50
             self.view.layoutIfNeeded()
         }, completion: { _ in
-            self.addItem()
+            self.addEditingItem()
             self.toolBar.isHidden = true
         })
     }

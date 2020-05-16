@@ -9,8 +9,8 @@
 import UIKit
 
 protocol VCWeeklyListItemHedaerDelegate: class {
-    func foldingSection()
-    func unFoldingSection()
+    func foldingSection(section: Int, isComplete: Bool)
+    func unFoldingSection(section: Int, isComplete: Bool)
 }
 
 class VCWeeklyListItemHedaer: UITableViewHeaderFooterView {
@@ -19,6 +19,9 @@ class VCWeeklyListItemHedaer: UITableViewHeaderFooterView {
     
     let title = UILabel()
     let ivArrow = UIImageView()
+    
+    var section: Int = -1
+    var isComplete: Bool = false
     
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
@@ -43,17 +46,21 @@ class VCWeeklyListItemHedaer: UITableViewHeaderFooterView {
         title.text = formatter.string(from: date)
     }
     
+    func setTitle(title: String) {
+        self.title.text = title
+    }
+    
     @objc func rotateArrow() {
         if self.ivArrow.transform == .identity {
             UIView.animate(withDuration: 0.3, animations: {
                 self.ivArrow.transform = self.ivArrow.transform.rotated(by: .pi)
             })
-            self.delegate?.foldingSection()
+            self.delegate?.foldingSection(section: section, isComplete: isComplete)
         } else {
             UIView.animate(withDuration: 0.3, animations: {
                 self.ivArrow.transform = .identity
             })
-            self.delegate?.unFoldingSection()
+            self.delegate?.unFoldingSection(section: section, isComplete: isComplete)
         }
     }
     
@@ -77,7 +84,7 @@ class VCWeeklyListItemHedaer: UITableViewHeaderFooterView {
         addSubview(title)
         addSubview(ivArrow)
         
-        let size: CGFloat = 12
+        let size: CGFloat = 14
         NSLayoutConstraint.activate([
             title.centerYAnchor.constraint(equalTo: centerYAnchor),
             title.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),

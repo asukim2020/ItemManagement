@@ -16,3 +16,9 @@ class Global {
     
     static let locale: Locale = Locale(identifier: Locale.current.languageCode ?? "EN")
 }
+
+extension Collection {
+    subscript(safe index: Index) -> Element? {
+        indices.contains(index) ? self[index] : nil
+    }
+}

@@ -57,13 +57,22 @@ import RxSwift
         }
     }
     
-    // TODO: - 날짜 적용이 이상하게 된 것으로 보임
-    static func getDayList(date: Date) -> [Item]? {
+    static func getDayList(date: Date, isComplete: Bool = false) -> [Item]? {
         do {
             let startOfDay = date.startOfDay.timeIntervalSince1970
             let endOfDay = date.endOfDay.timeIntervalSince1970
             let realm = try Realm()
-            let list = realm.objects(Item.self).filter("%@ <= toDay AND toDay <= %@", startOfDay, endOfDay)
+            let list = realm.objects(Item.self).filter(
+                "%@ <= toDay AND toDay <= %@ AND isComplete == %@",
+                startOfDay,
+                endOfDay,
+                isComplete
+            )
+            
+            if list.count == 0 {
+                return nil
+            }
+            
             var itemList: [Item] = []
             itemList.append(contentsOf: list)
             return itemList

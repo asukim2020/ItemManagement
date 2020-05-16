@@ -27,18 +27,37 @@ extension VCWeeklyList: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: VCWeeklyListItemHedaer.identifier) as! VCWeeklyListItemHedaer
-        header.setTitle(time: self.data[0].toDay)
+        
+        guard
+            let data = self.data[safe: section]
+            else {
+                return header
+        }
+        
+        if data.isComplete == true {
+            header.setTitle(title: NSLocalizedString("completed_items", comment: "완료된 항목"))
+        } else {
+            header.setTitle(time: data.time)
+        }
         header.delegate = self
+        header.section = section
+        header.isComplete = data.isComplete
         return header
     }
 
+    func numberOfSections(in tableView: UITableView) -> Int {
+        // TODO: - 필터 기능에 대한 기능 추가 - 현재 1일 기준으로 시작
+        return 1
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return data.count + (foldingFlag ? 0 : 1)
+        guard let items = getItems(section) else { return  1 }
+        return items.count + (foldingFlag ? 0 : 1)
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch (indexPath.row) {
-        case data.count:
+        case (getItems(indexPath)?.count ?? 0):
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: VCWeeklyListAddCell.identifier,
                 for: indexPath
@@ -51,6 +70,8 @@ extension VCWeeklyList: UITableViewDelegate, UITableViewDataSource {
                 withIdentifier: VCWeeklyListItemCell.identifier,
                 for: indexPath
             ) as! VCWeeklyListItemCell
+            guard let item = getItem(indexPath) else { return  cell }
+            
             cell.delegate = self
             cell.selectionStyle = .none
             
@@ -58,14 +79,14 @@ extension VCWeeklyList: UITableViewDelegate, UITableViewDataSource {
             cell.checkBox.isOn = data.isComplete
             cell.indexPath = indexPath
             
-            if data.key == 0 || editIndex == indexPath {
-                cell.setUpInputUI(data.title)
+            if item.key == 0 || editIndex == indexPath {
+                cell.setUpInputUI(item.title)
                 self.editIndex = indexPath
                 cell.tvWrite?.becomeFirstResponder()
             } else if data.isComplete {
-                cell.setUpCompleteUI(data.title)
+                cell.setUpCompleteUI(item.title)
             } else {
-                cell.setUpIncompleteUI(data.title)
+                cell.setUpIncompleteUI(item.title)
             }
             return cell
         }
@@ -77,17 +98,18 @@ extension VCWeeklyList: UITableViewDelegate, UITableViewDataSource {
         
         switch cell {
         case is VCWeeklyListItemCell:
-            addItem() {
-                self.editIndex = indexPath
+            addEditingItem() { [weak self] in
+                self?.editIndex = indexPath
                 tableView.reloadRows(at: [indexPath], with: .automatic)
                 let weeklyCell = tableView.cellForRow(at: indexPath) as! VCWeeklyListItemCell
                 weeklyCell.tvWrite?.becomeFirstResponder()
             }
 
         case is VCWeeklyListAddCell:
-            addItem() {
+            addEditingItem() { [weak self] in
                 tableView.beginUpdates()
-                self.data.append(Item())
+                var items = self?.getItems(indexPath)
+                items?.append(Item())
                 tableView.insertRows(at: [indexPath], with: .automatic)
                 tableView.endUpdates()
             }
@@ -96,13 +118,13 @@ extension VCWeeklyList: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    func addItem(complete: (() -> ())? = nil) {
-        guard let indexPath = editIndex else {
-            complete?()
-            return
+    func addEditingItem(complete: (() -> ())? = nil) {
+        guard let indexPath = editIndex,
+            let item = getItem(indexPath) else {
+                complete?()
+                return
         }
         
-        let item = data[indexPath.row]
         if item.key != 0 {
             editIndex = nil
             tableView.reloadRows(at: [indexPath], with: .automatic)
@@ -111,7 +133,8 @@ extension VCWeeklyList: UITableViewDelegate, UITableViewDataSource {
             Item.add(item: item).subscribe(
                 onNext: { [weak self] item in
                     self?.editIndex = nil
-                    self?.data[indexPath.row] = item
+                    var items = self?.getItems(indexPath)
+                    items?[indexPath.row] = item
                     self?.tableView.reloadRows(at: [indexPath], with: .automatic)
                     complete?()
                 },
@@ -124,30 +147,32 @@ extension VCWeeklyList: UITableViewDelegate, UITableViewDataSource {
 
 // MARK:- VCWeeklyListItemHedaerDelegate
 extension VCWeeklyList: VCWeeklyListItemHedaerDelegate {
-    func foldingSection() {
+    func foldingSection(section: Int, isComplete: Bool) {
+        guard var items = getItems(section) else { return }
+        
         tableView.beginUpdates()
         foldingFlag = true
-        
         var indexPaths: [IndexPath] = []
-        for (idx, _) in data.enumerated() {
-            indexPaths.append(IndexPath(row: idx, section: 0))
+        for (idx, _) in items.enumerated() {
+            indexPaths.append(IndexPath(row: idx, section: section))
         }
-        indexPaths.append(IndexPath(row: indexPaths.count, section: 0))
+        indexPaths.append(IndexPath(row: indexPaths.count, section: section))
         
-        data.removeAll()
+        items.removeAll()
         tableView.deleteRows(at: indexPaths, with: .top)
         tableView.endUpdates()
     }
     
-    func unFoldingSection() {
+    func unFoldingSection(section: Int, isComplete: Bool) {
         guard let data = Item.getDayList(date: Date()) else { return }
+        guard var items = getItems(section) else { return }
 
         tableView.beginUpdates()
         foldingFlag = false
         
-        self.data = data
+        items = data
         var indexPaths: [IndexPath] = []
-        for (idx, _) in data.enumerated() {
+        for (idx, _) in items.enumerated() {
             indexPaths.append(IndexPath(row: idx, section: 0))
         }
         indexPaths.append(IndexPath(row: indexPaths.count, section: 0))
@@ -167,14 +192,14 @@ extension VCWeeklyList: VCWeeklyListItemCellDelegate {
     }
     
     func textViewDidChange(title: String, indexPath: IndexPath) {
-        let data = self.data[indexPath.row]
-        if data.key == 0 {
-            data.title = title
+        guard let item = getItem(indexPath) else { return }
+        if item.key == 0 {
+            item.title = title
             editIndex = indexPath
         } else {
             guard let realm = try? Realm() else { return }
             try? realm.write {
-                data.title = title
+                item.title = title
             }
         }
     }
@@ -188,11 +213,4 @@ extension VCWeeklyList: VCWeeklyListItemCellDelegate {
             }
         }
     }
-}
-
-// MARK: - Scroll Event
-extension VCWeeklyList {
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        view.endEditing(true)
-//    }
 }
