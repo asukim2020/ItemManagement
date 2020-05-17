@@ -128,6 +128,8 @@ extension VCWeeklyList: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
         -> UISwipeActionsConfiguration? {
+            guard let _ = self.getItem(indexPath) else { return nil }
+            
             let deleteAction = UIContextualAction(style: .destructive, title: nil) { (_, _, completionHandler) in
                 // delete the item here
                 guard let removeData = self.getItem(indexPath) else {
