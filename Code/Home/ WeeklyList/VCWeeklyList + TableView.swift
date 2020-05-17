@@ -35,7 +35,8 @@ extension VCWeeklyList: UITableViewDelegate, UITableViewDataSource {
         }
         
         if data.isComplete == true {
-            header.setTitle(title: NSLocalizedString("completed_items", comment: "완료된 항목"))
+            let title = NSLocalizedString("completed_items", comment: "완료된 항목") + " (\(data.count))"
+            header.setTitle(title: title)
         } else {
             header.setTitle(time: data.time)
         }
@@ -116,6 +117,7 @@ extension VCWeeklyList: UITableViewDelegate, UITableViewDataSource {
                 guard let `self` = self else { return }
                 tableView.beginUpdates()
                 self.data[safe: indexPath.section]?.items.append(Item())
+                self.updateCount(indexPath)
                 tableView.insertRows(at: [indexPath], with: .automatic)
                 tableView.endUpdates()
             }
@@ -133,6 +135,7 @@ extension VCWeeklyList: UITableViewDelegate, UITableViewDataSource {
                     return
                 }
                 self.data[safe: indexPath.section]?.items.remove(at: indexPath.row)
+                self.updateCount(indexPath)
                 tableView.deleteRows(at: [indexPath], with: .automatic)
                 
                 guard let realm = try? Realm() else { return }
@@ -189,6 +192,7 @@ extension VCWeeklyList: VCWeeklyListItemHedaerDelegate {
     func unFoldingSection(section: Int, isComplete: Bool) {
         if let data = Item.getDayList(date: Date(), isComplete: isComplete) {
             self.data[safe: section]?.items = data
+            self.updateCount(section)
         } else {
             self.data[safe: section]?.items = []
         }
@@ -237,6 +241,8 @@ extension VCWeeklyList: VCWeeklyListItemCellDelegate {
                 self.data[safe: indexPath.section + 1]?.items.append(removeData)
                 self.data[safe: indexPath.section + 1]?.items =
                     self.data[safe: indexPath.section + 1]!.items.sorted { $0.order < $1.order }
+                self.updateCount(indexPath.section)
+                self.updateCount(indexPath.section + 1)
                 DispatchQueue.main.async {
                     self.tableView.reloadSections([indexPath.section, indexPath.section + 1], with: .automatic)
                 }
@@ -245,8 +251,9 @@ extension VCWeeklyList: VCWeeklyListItemCellDelegate {
                 let info = ItemsInfo(time: removeData.toDay,
                                      isComplete: removeData.isComplete,
                                      items: [removeData],
-                                     foldingFlag: false)
-                
+                                     foldingFlag: false,
+                                     count: 1)
+                self.updateCount(indexPath.section)
                 self.data.insert(info, at: indexPath.section + 1)
                 DispatchQueue.main.async { [weak self] in
                     guard let `self` = self else { return }
@@ -262,6 +269,7 @@ extension VCWeeklyList: VCWeeklyListItemCellDelegate {
             self.data[safe: indexPath.section - 1]?.items.append(removeData)
             self.data[safe: indexPath.section - 1]?.items =
                 self.data[safe: indexPath.section - 1]!.items.sorted { $0.order < $1.order }
+            self.updateCount(indexPath.section - 1)
             // 미완료로 변경된 경우
             if (self.data[safe: indexPath.section]?.items.count ?? 0) == 0 {
                 // 완료된 수가 0 개인 경우
@@ -277,6 +285,7 @@ extension VCWeeklyList: VCWeeklyListItemCellDelegate {
                 }
             } else {
                 // 섹션이 있는 경우
+                self.updateCount(indexPath.section)
                 DispatchQueue.main.async {
                     self.tableView.reloadSections([indexPath.section - 1, indexPath.section], with: .automatic)
                 }

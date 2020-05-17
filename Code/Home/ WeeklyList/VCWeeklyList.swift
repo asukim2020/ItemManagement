@@ -13,16 +13,19 @@ class ItemsInfo {
     var isComplete: Bool
     var items: [Item]
     var foldingFlag: Bool
+    var count: Int
     
     init(time: TimeInterval,
          isComplete: Bool,
          items: [Item],
-         foldingFlag: Bool
+         foldingFlag: Bool,
+         count: Int
     ) {
         self.time = time
         self.isComplete = isComplete
         self.items = items
         self.foldingFlag = foldingFlag
+        self.count = count
     }
 }
 
@@ -52,13 +55,15 @@ class VCWeeklyList: UIViewController {
             let info = ItemsInfo(time: data[0].toDay,
                                  isComplete: data[0].isComplete,
                                  items: data,
-                                 foldingFlag: false)
+                                 foldingFlag: false,
+                                 count: data.count)
             self.data.append(info)
         } else {
             let info = ItemsInfo(time: Date().timeIntervalSince1970,
                                  isComplete: false,
                                  items: [],
-                                 foldingFlag: false)
+                                 foldingFlag: false,
+                                 count: 0)
             self.data.append(info)
         }
         
@@ -66,7 +71,8 @@ class VCWeeklyList: UIViewController {
             let info = ItemsInfo(time: data[0].toDay,
                                  isComplete: data[0].isComplete,
                                  items: data,
-                                 foldingFlag: false)
+                                 foldingFlag: false,
+                                 count: data.count)
             self.data.append(info)
         }
         
@@ -94,6 +100,14 @@ class VCWeeklyList: UIViewController {
     
     func getItem(_ indexPath: IndexPath) -> Item? {
         return data[safe: indexPath.section]?.items[safe: indexPath.row]
+    }
+    
+    func updateCount(_ section: Int) {
+        data[safe: section]?.count = (data[safe: section]?.items.count ?? 0)
+    }
+    
+    func updateCount(_ indexPath: IndexPath) {
+        data[safe: indexPath.section]?.count = (data[safe: indexPath.section]?.items.count ?? 0)
     }
     
     // MARK: - keyboard notification
