@@ -240,11 +240,16 @@ extension VCWeeklyList: VCWeeklyListItemCellDelegate {
             // 완료로 변경되는 경우
             if (self.data[safe: indexPath.section + 1]?.isComplete ?? false) {
                 // 섹션이 있는 경우
-                self.data[safe: indexPath.section + 1]?.items.append(removeData)
-                self.data[safe: indexPath.section + 1]?.items =
-                    self.data[safe: indexPath.section + 1]!.items.sorted { $0.order < $1.order }
-                self.updateCount(indexPath.section)
-                self.updateCount(indexPath.section + 1)
+                if !(self.data[safe: indexPath.section + 1]?.foldingFlag ?? false) {
+                    self.data[safe: indexPath.section + 1]?.items.append(removeData)
+                    self.data[safe: indexPath.section + 1]?.items =
+                        self.data[safe: indexPath.section + 1]!.items.sorted { $0.order < $1.order }
+                    self.updateCount(indexPath.section)
+                    self.updateCount(indexPath.section + 1)
+                } else {
+                    self.data[safe: indexPath.section + 1]?.count = (self.data[safe: indexPath.section + 1]?.count ?? 0) + 1
+                }
+                
                 DispatchQueue.main.async {
                     self.tableView.reloadSections([indexPath.section, indexPath.section + 1], with: .automatic)
                 }
