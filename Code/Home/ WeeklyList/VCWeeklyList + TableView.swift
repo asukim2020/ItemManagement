@@ -104,7 +104,8 @@ extension VCWeeklyList: UITableViewDelegate, UITableViewDataSource {
         case is VCWeeklyListItemCell:
             inputActive = cell as? VCWeeklyListItemCell
             addEditingItem() { [weak self] in
-                self?.editIndex = indexPath
+                guard let `self` = self else { return }
+                self.editIndex = indexPath
                 tableView.reloadRows(at: [indexPath], with: .automatic)
                 let weeklyCell = tableView.cellForRow(at: indexPath) as! VCWeeklyListItemCell
                 weeklyCell.tvWrite?.becomeFirstResponder()
@@ -112,8 +113,9 @@ extension VCWeeklyList: UITableViewDelegate, UITableViewDataSource {
 
         case is VCWeeklyListAddCell:
             addEditingItem() { [weak self] in
+                guard let `self` = self else { return }
                 tableView.beginUpdates()
-                self?.data[safe: indexPath.section]?.items.append(Item())
+                self.data[safe: indexPath.section]?.items.append(Item())
                 tableView.insertRows(at: [indexPath], with: .automatic)
                 tableView.endUpdates()
             }
@@ -160,10 +162,11 @@ extension VCWeeklyList: UITableViewDelegate, UITableViewDataSource {
         } else {
             Item.add(item: item).subscribe(
                 onNext: { [weak self] item in
-                    self?.editIndex = nil
-                    var items = self?.getItems(indexPath)
+                    guard let `self` = self else { return }
+                    self.editIndex = nil
+                    var items = self.getItems(indexPath)
                     items?[indexPath.row] = item
-                    self?.tableView.reloadRows(at: [indexPath], with: .automatic)
+                    self.tableView.reloadRows(at: [indexPath], with: .automatic)
                     complete?()
                 },
                 onError: { error in
@@ -218,7 +221,7 @@ extension VCWeeklyList: VCWeeklyListItemCellDelegate {
         self.toolBar.isHidden = true
         guard let realm = try? Realm() else { return }
         try? realm.write { [weak self] in
-            guard let self = self else { return }
+            guard let `self` = self else { return }
             self.data[safe: indexPath.section]?.items[safe: indexPath.row]?.isComplete = isComplete
             updateUIIsComplete(isComplete: isComplete, indexPath: indexPath)
         }
@@ -245,17 +248,38 @@ extension VCWeeklyList: VCWeeklyListItemCellDelegate {
                                      foldingFlag: false)
                 
                 self.data.insert(info, at: indexPath.section + 1)
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
+                DispatchQueue.main.async { [weak self] in
+                    guard let `self` = self else { return }
+                    UIView.transition(
+                        with: self.tableView,
+                        duration: 0.35,
+                        options: .transitionCrossDissolve,
+                        animations: { self.tableView.reloadData() }
+                    )
                 }
             }
         } else {
-            // 미완료로 변경된 경우
             self.data[safe: indexPath.section - 1]?.items.append(removeData)
             self.data[safe: indexPath.section - 1]?.items =
                 self.data[safe: indexPath.section - 1]!.items.sorted { $0.order < $1.order }
-            DispatchQueue.main.async {
-                self.tableView.reloadSections([indexPath.section - 1, indexPath.section], with: .automatic)
+            // 미완료로 변경된 경우
+            if (self.data[safe: indexPath.section]?.items.count ?? 0) == 0 {
+                // 완료된 수가 0 개인 경우
+                self.data.remove(at: indexPath.section)
+                DispatchQueue.main.async { [weak self] in
+                    guard let `self` = self else { return }
+                    UIView.transition(
+                        with: self.tableView,
+                        duration: 0.35,
+                        options: .transitionCrossDissolve,
+                        animations: { self.tableView.reloadData() }
+                    )
+                }
+            } else {
+                // 섹션이 있는 경우
+                DispatchQueue.main.async {
+                    self.tableView.reloadSections([indexPath.section - 1, indexPath.section], with: .automatic)
+                }
             }
         }
     }
